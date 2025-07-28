@@ -2,41 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Nebula Bistro Design System - Futuristic Dark Theme
 All colors MUST be HSL.
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Theme Colors */
+    --background: 237 55% 7%; /* #0F0F1A - Midnight Blue Black */
+    --foreground: 218 13% 98%; /* #FDFDFD - White */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card Components */
+    --card: 237 55% 12%; /* Slightly lighter than background */
+    --card-foreground: 218 13% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover Components */
+    --popover: 237 55% 10%;
+    --popover-foreground: 218 13% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary Accent - Neon Indigo */
+    --primary: 263 84% 61%; /* #7F5AF0 */
+    --primary-foreground: 218 13% 98%;
+    --primary-glow: 263 84% 71%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary Accent - Cyber Green */
+    --secondary: 157 50% 49%; /* #2CB67D */
+    --secondary-foreground: 218 13% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Elements */
+    --muted: 237 55% 15%;
+    --muted-foreground: 215 17% 64%; /* #94A1B2 - Muted Gray */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Elements */
+    --accent: 237 55% 18%;
+    --accent-foreground: 218 13% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* CTA - Coral Glow */
+    --cta: 7 100% 69%; /* #FF6F61 */
+    --cta-foreground: 218 13% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Error/Warning - Vibrant Rose */
+    --destructive: 347 77% 60%; /* #F43F5E */
+    --destructive-foreground: 218 13% 98%;
 
-    --radius: 0.5rem;
+    /* Borders and Inputs */
+    --border: 237 55% 20%;
+    --input: 237 55% 18%;
+    --ring: 263 84% 61%;
+
+    /* Design Elements */
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(157 50% 59%));
+    --gradient-nebula: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+
+    /* Shadows and Glows */
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    --shadow-subtle: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +132,128 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Effect */
+  .glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Nebula Glow Effect */
+  .nebula-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Hover Scale Animation */
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  /* Parallax Container */
+  .parallax {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Hero Text Animation */
+  .typewriter {
+    overflow: hidden;
+    border-right: 2px solid hsl(var(--primary));
+    white-space: nowrap;
+    animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+}
+
+@layer utilities {
+  /* Custom Font Classes */
+  .font-space-grotesk {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  }
+  
+  .font-inter {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Gradient Text */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-nebula {
+    background: var(--gradient-nebula);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Starfield Background */
+  .starfield {
+    background: radial-gradient(2px 2px at 20px 30px, hsl(var(--primary)), transparent),
+                radial-gradient(2px 2px at 40px 70px, hsl(var(--secondary)), transparent),
+                radial-gradient(1px 1px at 90px 40px, hsl(var(--cta)), transparent),
+                radial-gradient(1px 1px at 130px 80px, hsl(var(--primary-glow)), transparent),
+                radial-gradient(2px 2px at 160px 30px, hsl(var(--secondary)), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: move-stars 20s linear infinite;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: hsl(var(--primary));
+  }
+}
+
+@keyframes move-stars {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -200px 0;
   }
 }
