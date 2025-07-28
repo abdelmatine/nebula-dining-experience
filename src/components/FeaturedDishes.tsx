@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/redux";
+import { addItem } from "@/store/cartSlice";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, Plus } from "lucide-react";
@@ -34,6 +37,8 @@ const dishes = [
 ];
 
 export const FeaturedDishes = () => {
+  const dispatch = useAppDispatch();
+  
   return (
     <section className="py-20 px-6 relative">
       <div className="max-w-7xl mx-auto">
@@ -94,9 +99,14 @@ export const FeaturedDishes = () => {
                       {dish.price}
                     </span>
                     <Button 
-                      variant="glass" 
                       size="sm" 
                       className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      onClick={() => dispatch(addItem({
+                        id: dish.id.toString(),
+                        name: dish.name,
+                        price: parseFloat(dish.price.replace('$', '')),
+                        image: dish.image
+                      }))}
                     >
                       <Plus size={16} className="mr-1" />
                       Add
@@ -115,9 +125,11 @@ export const FeaturedDishes = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <Button variant="nebula" size="lg" className="px-8 py-4">
-            View Full Menu
-          </Button>
+          <Link to="/menu">
+            <Button size="lg" className="px-8 py-4">
+              View Full Menu
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Nebula Bistro Design System - Futuristic Dark Theme
+/* Glovo-inspired Design System - Bright & Modern
 All colors MUST be HSL.
 */
 
@@ -10,61 +10,61 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Core Theme Colors */
-    --background: 237 55% 7%; /* #0F0F1A - Midnight Blue Black */
-    --foreground: 218 13% 98%; /* #FDFDFD - White */
+    /* Core Theme Colors - Glovo inspired */
+    --background: 0 0% 100%; /* White */
+    --foreground: 222 47% 11%; /* Dark text */
 
     /* Card Components */
-    --card: 237 55% 12%; /* Slightly lighter than background */
-    --card-foreground: 218 13% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
     /* Popover Components */
-    --popover: 237 55% 10%;
-    --popover-foreground: 218 13% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary Accent - Neon Indigo */
-    --primary: 263 84% 61%; /* #7F5AF0 */
-    --primary-foreground: 218 13% 98%;
-    --primary-glow: 263 84% 71%;
+    /* Primary Accent - Glovo Orange */
+    --primary: 33 100% 60%; /* #FF9900 - Glovo Orange */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 33 100% 70%;
 
-    /* Secondary Accent - Cyber Green */
-    --secondary: 157 50% 49%; /* #2CB67D */
-    --secondary-foreground: 218 13% 98%;
+    /* Secondary Accent - Teal */
+    --secondary: 183 100% 45%; /* #00B5CC - Glovo Teal */
+    --secondary-foreground: 0 0% 100%;
 
     /* Muted Elements */
-    --muted: 237 55% 15%;
-    --muted-foreground: 215 17% 64%; /* #94A1B2 - Muted Gray */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
     /* Accent Elements */
-    --accent: 237 55% 18%;
-    --accent-foreground: 218 13% 98%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
 
-    /* CTA - Coral Glow */
-    --cta: 7 100% 69%; /* #FF6F61 */
-    --cta-foreground: 218 13% 98%;
+    /* CTA - Bright Orange */
+    --cta: 25 100% 55%; /* #FF7A00 */
+    --cta-foreground: 0 0% 100%;
 
-    /* Error/Warning - Vibrant Rose */
-    --destructive: 347 77% 60%; /* #F43F5E */
-    --destructive-foreground: 218 13% 98%;
+    /* Error/Warning */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
     /* Borders and Inputs */
-    --border: 237 55% 20%;
-    --input: 237 55% 18%;
-    --ring: 263 84% 61%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 33 100% 60%;
 
     /* Design Elements */
     --radius: 0.75rem;
 
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(157 50% 59%));
-    --gradient-nebula: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(183 100% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--cta)));
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
 
     /* Shadows and Glows */
-    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
-    --shadow-subtle: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
-    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-glow: 0 4px 20px hsl(var(--primary) / 0.3);
+    --shadow-subtle: 0 2px 8px hsl(0 0% 0% / 0.1);
+    --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.1);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
