@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { FeaturedDishes } from "@/components/FeaturedDishes";
 import { WhyNebula } from "@/components/WhyNebula";
@@ -6,7 +5,6 @@ import { WhyNebula } from "@/components/WhyNebula";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
       <main>
         <section id="home">
           <Hero />
