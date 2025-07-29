@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks/redux";
 import { toggleCart } from "@/store/cartSlice";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ShoppingCart, User } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,7 @@ export const Navigation = () => {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
@@ -66,6 +67,8 @@ export const Navigation = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
+            
             <Button 
               variant="ghost" 
               size="sm" 
@@ -82,8 +85,8 @@ export const Navigation = () => {
             <Button variant="ghost" size="sm">
               <User size={20} />
             </Button>
-            <Button className="bg-primary hover:bg-primary/90" size="sm">
-              Reserve
+            <Button className="bg-primary hover:bg-primary/90" size="sm" asChild>
+              <Link to="/reservations">Reserve</Link>
             </Button>
           </div>
 
@@ -131,8 +134,8 @@ export const Navigation = () => {
                 <ShoppingCart size={20} className="mr-2" />
                 Cart ({items.length})
               </Button>
-              <Button className="bg-primary hover:bg-primary/90 flex-1" size="sm">
-                Reserve
+              <Button className="bg-primary hover:bg-primary/90 flex-1" size="sm" asChild>
+                <Link to="/reservations">Reserve</Link>
               </Button>
             </div>
           </motion.div>

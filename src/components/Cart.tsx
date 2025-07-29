@@ -2,11 +2,15 @@ import { useAppSelector, useAppDispatch } from '@/hooks/redux';
 import { removeItem, updateQuantity, closeCart } from '@/store/cartSlice';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { Card, CardContent } from '@/components/ui/card';
+import { Minus, Plus, X, ShoppingBag, CreditCard } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
   const { items, isOpen, total } = useAppSelector(state => state.cart);
+  const { toast } = useToast();
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -16,72 +20,127 @@ export const Cart = () => {
     }
   };
 
+  const handleCheckout = () => {
+    if (items.length === 0) return;
+    
+    toast({
+      title: "Checkout Initiated",
+      description: `Proceeding to checkout with ${items.length} item(s) - Total: $${(total + (total * 0.085) + 2.99).toFixed(2)}`,
+    });
+    
+    // Here you would integrate with payment processor
+    // For now, we'll just show a success message
+    setTimeout(() => {
+      toast({
+        title: "Order Placed Successfully!",
+        description: "You will receive a confirmation email shortly.",
+      });
+      dispatch(closeCart());
+    }, 2000);
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={() => dispatch(closeCart())}>
-      <SheetContent>
+      <SheetContent className="w-full sm:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Your Cart ({items.length} items)</SheetTitle>
+          <SheetTitle className="font-space-grotesk flex items-center gap-2">
+            <ShoppingBag className="h-5 w-5" />
+            Cart ({items.length} {items.length === 1 ? 'item' : 'items'})
+          </SheetTitle>
         </SheetHeader>
         
         <div className="flex flex-col h-full">
-          <div className="flex-1 overflow-y-auto py-4">
-            {items.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">Your cart is empty</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
+          {items.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center py-12">
+              <ShoppingBag size={64} className="text-muted-foreground mb-4" />
+              <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
+              <p className="text-muted-foreground">Add some delicious items to get started!</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex-1 overflow-y-auto py-4 space-y-4">
                 {items.map(item => (
-                  <div key={item.id} className="flex items-center gap-3 p-3 border rounded-lg">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-medium">{item.name}</h4>
-                      <p className="text-sm text-muted-foreground">${item.price}</p>
-                      <div className="flex items-center gap-2 mt-2">
+                  <Card key={item.id} className="border-border/50">
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-4">
+                        <div className="relative">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-16 h-16 object-cover rounded-lg"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold font-space-grotesk truncate">{item.name}</h4>
+                          <p className="text-primary font-medium">${item.price.toFixed(2)}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Subtotal: ${(item.price * item.quantity).toFixed(2)}
+                          </p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 w-8 p-0"
+                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                          >
+                            <Minus size={14} />
+                          </Button>
+                          <span className="w-8 text-center font-medium text-sm">{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 w-8 p-0"
+                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                          >
+                            <Plus size={14} />
+                          </Button>
+                        </div>
                         <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                        >
-                          <Minus className="w-3 h-3" />
-                        </Button>
-                        <span className="w-8 text-center">{item.quantity}</span>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                        >
-                          <Plus className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
                           variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                           onClick={() => dispatch(removeItem(item.id))}
-                          className="ml-auto text-destructive"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <X size={14} />
                         </Button>
                       </div>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-            )}
-          </div>
-          
-          {items.length > 0 && (
-            <div className="border-t pt-4 mt-4">
-              <div className="flex justify-between items-center mb-4">
-                <span className="font-semibold">Total: ${total.toFixed(2)}</span>
+              
+              <div className="border-t pt-4 space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal:</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tax (8.5%):</span>
+                    <span>${(total * 0.085).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Delivery Fee:</span>
+                    <span>$2.99</span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between items-center text-lg font-bold">
+                    <span>Total:</span>
+                    <span className="text-primary">${(total + (total * 0.085) + 2.99).toFixed(2)}</span>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full" 
+                  size="lg"
+                  onClick={handleCheckout}
+                  disabled={items.length === 0}
+                >
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Proceed to Checkout
+                </Button>
               </div>
-              <Button className="w-full" size="lg">
-                Checkout
-              </Button>
-            </div>
+            </>
           )}
         </div>
       </SheetContent>

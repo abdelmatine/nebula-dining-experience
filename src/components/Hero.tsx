@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Rocket, ChefHat } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-nebula.jpg";
 
 export const Hero = () => {
@@ -88,21 +89,27 @@ export const Hero = () => {
             transition={{ delay: 1.2, duration: 0.8 }}
           >
             <Button 
-              variant="nebula" 
+              variant="default" 
               size="lg" 
               className="px-8 py-4 text-lg font-semibold hover-scale"
+              asChild
             >
-              Explore Menu
-              <Sparkles className="ml-2" size={20} />
+              <Link to="/menu">
+                Explore Menu
+                <Sparkles className="ml-2" size={20} />
+              </Link>
             </Button>
             
             <Button 
-              variant="glass" 
+              variant="outline" 
               size="lg" 
               className="px-8 py-4 text-lg font-semibold hover-scale"
+              asChild
             >
-              Book a Table
-              <Rocket className="ml-2" size={20} />
+              <Link to="/reservations">
+                Book a Table
+                <Rocket className="ml-2" size={20} />
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
