@@ -16,7 +16,7 @@ export const Navigation = () => {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Menu", href: "/menu" },
-    { name: "Gallery", href: "/gallery" },
+    { name: "Locations", href: "/locations" },
     { name: "Reservations", href: "/reservations" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
@@ -41,7 +41,7 @@ export const Navigation = () => {
                 <span className="text-xl font-bold text-white">N</span>
               </div>
               <span className="text-xl font-space-grotesk font-bold bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
-                Nebula Bistro
+                Monda's Restaurant
               </span>
             </motion.div>
           </Link>

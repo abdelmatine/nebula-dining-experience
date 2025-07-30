@@ -5,18 +5,18 @@ import { Atom, Cpu, Sparkles } from "lucide-react";
 const reasons = [
   {
     icon: Atom,
-    title: "Quantum Ingredients",
-    description: "Sourced from the finest molecular farms across the solar system, ensuring peak flavor and nutrition."
+    title: "Premium Ingredients",
+    description: "Sourced from the finest local farms and international suppliers, ensuring peak flavor and freshness."
   },
   {
     icon: Cpu,
-    title: "AI-Enhanced Cooking",
-    description: "Our robotic chefs use quantum algorithms to achieve perfect precision in every dish."
+    title: "Masterful Cooking",
+    description: "Our expert chefs use traditional techniques combined with modern precision to achieve perfection in every dish."
   },
   {
     icon: Sparkles,
-    title: "Immersive Ambiance",
-    description: "Dine surrounded by holographic nebulae and interactive light shows that respond to your mood."
+    title: "Elegant Ambiance",
+    description: "Dine in a sophisticated atmosphere with warm lighting and classic décor that creates the perfect dining experience."
   }
 ];
 
@@ -35,10 +35,10 @@ export const WhyNebula = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-5xl font-space-grotesk font-bold mb-6">
-            Why Choose <span className="text-gradient-nebula">Nebula Bistro</span>?
+            Why Choose <span className="text-gradient-nebula">Monda's</span>?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We're not just a restaurant—we're a gateway to the future of culinary excellence
+            We're not just a restaurant—we're a destination for authentic culinary excellence
           </p>
         </motion.div>
 

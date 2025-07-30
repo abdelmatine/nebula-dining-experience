@@ -2,9 +2,16 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Rocket, ChefHat } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCountdown } from "@/hooks/useCountdown";
 import heroImage from "@/assets/hero-nebula.jpg";
 
 export const Hero = () => {
+  // Set target date for next wine tasting (7 days from now)
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 7);
+  targetDate.setHours(19, 30, 0, 0); // 7:30 PM
+  
+  const { hours, minutes, seconds } = useCountdown(targetDate);
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Starfield Background */}
@@ -57,8 +64,8 @@ export const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <span className="text-gradient-nebula">Nebula</span>{" "}
-            <span className="text-foreground">Bistro</span>
+            <span className="text-gradient-nebula">Monda's</span>{" "}
+            <span className="text-foreground">Restaurant</span>
           </motion.h1>
           
           <motion.div
@@ -68,7 +75,7 @@ export const Hero = () => {
             transition={{ delay: 0.6, duration: 1 }}
           >
             <p className="text-2xl md:text-3xl font-space-grotesk text-muted-foreground typewriter">
-              Where Taste Meets Tomorrow
+              Classic Elegance • Timeless Flavors
             </p>
           </motion.div>
           
@@ -78,8 +85,8 @@ export const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}
           >
-            Experience culinary excellence in a futuristic atmosphere where innovation meets flavor. 
-            Step into the future of dining.
+            Experience authentic cuisine in an elegant atmosphere where tradition meets excellence. 
+            A timeless destination for refined dining.
           </motion.p>
           
           <motion.div
@@ -114,7 +121,7 @@ export const Hero = () => {
           </motion.div>
         </motion.div>
         
-        {/* Quantum Countdown */}
+        {/* Wine Tasting Event */}
         <motion.div
           className="mt-20 glass p-6 rounded-2xl max-w-md mx-auto"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -122,10 +129,10 @@ export const Hero = () => {
           transition={{ delay: 1.5, duration: 0.8 }}
         >
           <div className="text-primary font-space-grotesk font-semibold mb-2">
-            Next Quantum Tasting Menu Drop
+            Next Wine Tasting Event
           </div>
           <div className="text-3xl font-bold text-gradient-primary">
-            07:42:16
+            {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
           </div>
           <div className="text-sm text-muted-foreground mt-2">
             Limited to 20 seats

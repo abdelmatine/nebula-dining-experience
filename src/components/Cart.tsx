@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
 import { removeItem, updateQuantity, closeCart } from '@/store/cartSlice';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
-import { Minus, Plus, X, ShoppingBag, CreditCard } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Minus, Plus, X, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { CheckoutForm } from './CheckoutForm';
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
   const { items, isOpen, total } = useAppSelector(state => state.cart);
-  const { toast } = useToast();
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -22,21 +23,13 @@ export const Cart = () => {
 
   const handleCheckout = () => {
     if (items.length === 0) return;
-    
-    toast({
-      title: "Checkout Initiated",
-      description: `Proceeding to checkout with ${items.length} item(s) - Total: $${(total + (total * 0.085) + 2.99).toFixed(2)}`,
-    });
-    
-    // Here you would integrate with payment processor
-    // For now, we'll just show a success message
-    setTimeout(() => {
-      toast({
-        title: "Order Placed Successfully!",
-        description: "You will receive a confirmation email shortly.",
-      });
-      dispatch(closeCart());
-    }, 2000);
+    setShowCheckout(true);
+  };
+
+  const handleCheckoutSuccess = () => {
+    setShowCheckout(false);
+    dispatch(closeCart());
+    // Clear cart items here if needed
   };
 
   return (
@@ -50,7 +43,20 @@ export const Cart = () => {
         </SheetHeader>
         
         <div className="flex flex-col h-full">
-          {items.length === 0 ? (
+          {showCheckout ? (
+            <div className="space-y-4">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setShowCheckout(false)}
+                className="self-start"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Cart
+              </Button>
+              <CheckoutForm total={total} onSuccess={handleCheckoutSuccess} />
+            </div>
+          ) : items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
               <ShoppingBag size={64} className="text-muted-foreground mb-4" />
               <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
@@ -136,7 +142,6 @@ export const Cart = () => {
                   onClick={handleCheckout}
                   disabled={items.length === 0}
                 >
-                  <CreditCard className="mr-2 h-4 w-4" />
                   Proceed to Checkout
                 </Button>
               </div>

@@ -10,11 +10,13 @@ import { Navigation } from "@/components/Navigation";
 import { Cart } from "@/components/Cart";
 import Index from "./pages/Index";
 import Menu from "./pages/Menu";
+import Locations from "./pages/Locations";
 import RestaurantCorners from "./pages/RestaurantCorners";
 import Reservations from "./pages/Reservations";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { Footer } from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/menu" element={<Menu />} />
+              <Route path="/locations" element={<Locations />} />
               <Route path="/gallery" element={<RestaurantCorners />} />
               <Route path="/reservations" element={<Reservations />} />
               <Route path="/about" element={<About />} />
@@ -37,6 +40,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
             <Cart />
           </BrowserRouter>
         </TooltipProvider>

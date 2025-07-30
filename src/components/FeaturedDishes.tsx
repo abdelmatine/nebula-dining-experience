@@ -8,28 +8,28 @@ import { Star, Plus } from "lucide-react";
 
 const dishes = [
   {
-    id: 1,
-    name: "Quantum Wagyu",
-    description: "Molecularly enhanced A5 wagyu with holographic seasoning",
-    price: "$89",
+    id: "1",
+    name: "Mediterranean Bowl",
+    description: "Fresh quinoa with grilled vegetables, olives, and tahini",
+    price: 16.99,
     image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
     rating: 4.9,
     isSignature: true
   },
   {
-    id: 2,
-    name: "Nebula Sashimi",
-    description: "Color-changing tuna with edible aurora effects",
-    price: "$76",
+    id: "2", 
+    name: "Truffle Pasta",
+    description: "Handmade pasta with black truffle and parmesan",
+    price: 24.99,
     image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=300&fit=crop",
     rating: 4.8,
     isSignature: true
   },
   {
-    id: 3,
-    name: "Cosmic Risotto",
-    description: "Levitating grains with stardust truffle foam",
-    price: "$54",
+    id: "3",
+    name: "Grilled Salmon",
+    description: "Atlantic salmon with herb crust and seasonal vegetables",
+    price: 28.99,
     image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&h=300&fit=crop",
     rating: 4.7,
     isSignature: false
@@ -50,10 +50,10 @@ export const FeaturedDishes = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-5xl font-space-grotesk font-bold mb-6">
-            <span className="text-gradient-nebula">Featured</span> Experiences
+            <span className="text-gradient-nebula">Featured</span> Specialties
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover our signature dishes crafted with ingredients from across the galaxy
+            Discover our signature dishes crafted with the finest ingredients and traditional techniques
           </p>
         </motion.div>
 
@@ -96,15 +96,15 @@ export const FeaturedDishes = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-3xl font-bold text-gradient-nebula">
-                      {dish.price}
+                      ${dish.price}
                     </span>
                     <Button 
                       size="sm" 
                       className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onClick={() => dispatch(addItem({
-                        id: dish.id.toString(),
+                        id: dish.id,
                         name: dish.name,
-                        price: parseFloat(dish.price.replace('$', '')),
+                        price: dish.price,
                         image: dish.image
                       }))}
                     >
