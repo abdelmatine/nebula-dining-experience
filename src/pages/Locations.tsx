@@ -1,8 +1,7 @@
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, ExternalLink } from "lucide-react";
+import { InteractiveMap } from "@/components/InteractiveMap";
 
 const locations = [
   {
@@ -37,7 +36,6 @@ const locations = [
 export default function Locations() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
       
       <div className="pt-24 px-6">
         <div className="max-w-7xl mx-auto">
@@ -98,28 +96,13 @@ export default function Locations() {
             ))}
           </div>
 
-          {/* Map Section */}
-          <div className="bg-muted rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-space-grotesk font-bold mb-4">
-              Find Us on the Map
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              Click on any location above to get directions via Google Maps
-            </p>
-            <div className="aspect-video bg-background rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                <p className="text-muted-foreground">Interactive map integration available</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Use the "View on Map" buttons above for navigation
-                </p>
-              </div>
-            </div>
+          {/* Interactive Map Section */}
+          <div>
+            <h2 className="text-3xl font-bold mb-8 text-center">Find Us on the Map</h2>
+            <InteractiveMap />
           </div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   );
 }

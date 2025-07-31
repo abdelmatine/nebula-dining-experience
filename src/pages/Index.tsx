@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { FeaturedDishes } from "@/components/FeaturedDishes";
 import { WhyNebula } from "@/components/WhyNebula";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 const Index = () => {
   return (
@@ -14,6 +15,9 @@ const Index = () => {
         </section>
         <section id="about">
           <WhyNebula />
+        </section>
+        <section id="newsletter">
+          <NewsletterSignup />
         </section>
       </main>
     </div>

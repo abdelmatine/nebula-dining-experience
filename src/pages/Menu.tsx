@@ -6,8 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Navigation } from '@/components/Navigation';
-
 export default function Menu() {
   const dispatch = useAppDispatch();
   const { items, selectedItem, isDetailOpen, activeCategory } = useAppSelector(state => state.menu);
@@ -29,7 +27,6 @@ export default function Menu() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
       <div className="pt-24 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4">Our Menu</h1>
