@@ -16,7 +16,7 @@ export const Hero = () => {
     <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Hero Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       
@@ -25,7 +25,7 @@ export const Hero = () => {
       
       {/* Floating Elements - Top Right */}
       <motion.div 
-        className="absolute top-16 right-16 text-primary/40"
+        className="absolute top-24 right-20 text-primary/40"
         animate={{ y: [-20, 20, -20], rotate: [0, 10, 0] }}
         transition={{ duration: 6, repeat: Infinity }}
       >
@@ -33,7 +33,7 @@ export const Hero = () => {
       </motion.div>
       
       <motion.div 
-        className="absolute top-32 right-32 text-accent/30"
+        className="absolute top-40 right-40 text-accent/30"
         animate={{ y: [15, -15, 15], rotate: [0, -10, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
       >
@@ -41,28 +41,64 @@ export const Hero = () => {
       </motion.div>
       
       <motion.div 
-        className="absolute top-20 right-48 text-primary/20"
+        className="absolute top-28 right-56 text-primary/20"
         animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
         transition={{ duration: 8, repeat: Infinity }}
       >
         <Crown size={28} />
       </motion.div>
 
-      {/* Decorative Elements - Center */}
-      <motion.div 
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary/10"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      {/* Wine Tasting Event - Center Right */}
+      <motion.div
+        className="absolute top-1/2 right-20 transform -translate-y-1/2"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, duration: 1 }}
       >
-        <div className="w-96 h-96 border border-primary/20 rounded-full flex items-center justify-center">
-          <div className="w-64 h-64 border border-primary/10 rounded-full flex items-center justify-center">
-            <div className="w-32 h-32 border border-primary/5 rounded-full"></div>
+        <div className="relative">
+          {/* Clock Circle Background */}
+          <motion.div 
+            className="w-48 h-48 border-2 border-primary/30 rounded-full flex items-center justify-center bg-background/20 backdrop-blur-sm"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            {/* Clock markers */}
+            <div className="absolute inset-4 border border-primary/20 rounded-full"></div>
+            <div className="absolute top-2 left-1/2 w-0.5 h-6 bg-primary/40 transform -translate-x-1/2"></div>
+            <div className="absolute bottom-2 left-1/2 w-0.5 h-6 bg-primary/40 transform -translate-x-1/2"></div>
+            <div className="absolute left-2 top-1/2 h-0.5 w-6 bg-primary/40 transform -translate-y-1/2"></div>
+            <div className="absolute right-2 top-1/2 h-0.5 w-6 bg-primary/40 transform -translate-y-1/2"></div>
+          </motion.div>
+          
+          {/* Event Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+            <Clock className="h-6 w-6 text-primary mb-2" />
+            <div className="text-sm font-space-grotesk font-semibold text-primary mb-1">
+              Wine Tasting
+            </div>
+            <div className="text-2xl font-bold text-gradient-primary mb-1">
+              {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              20 seats only
+            </div>
           </div>
         </div>
       </motion.div>
 
+      {/* Decorative Elements - Background */}
+      <motion.div 
+        className="absolute top-1/3 left-1/3 text-primary/5"
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+      >
+        <div className="w-64 h-64 border border-primary/10 rounded-full flex items-center justify-center">
+          <div className="w-32 h-32 border border-primary/5 rounded-full"></div>
+        </div>
+      </motion.div>
+
       {/* Main Content - Bottom Left */}
-      <div className="relative z-10 px-6 pb-20 pl-12 max-w-4xl">
+      <div className="relative z-10 px-6 pb-32 pl-12 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
@@ -135,26 +171,6 @@ export const Hero = () => {
             </Button>
           </motion.div>
           
-          {/* Wine Tasting Event */}
-          <motion.div
-            className="glass p-6 rounded-2xl max-w-sm backdrop-blur-lg"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.8 }}
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <Clock className="h-5 w-5 text-primary" />
-              <div className="text-primary font-space-grotesk font-semibold">
-                Next Wine Tasting Event
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-gradient-primary mb-2">
-              {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Limited to 20 seats • Premium selection
-            </div>
-          </motion.div>
         </motion.div>
       </div>
       

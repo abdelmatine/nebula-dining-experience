@@ -24,71 +24,105 @@ export const Navigation = () => {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm"
+      className="fixed top-0 left-0 right-0 z-50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <nav className="max-w-7xl mx-auto px-6 py-4">
+      <nav className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo Section */}
           <Link to="/">
             <motion.div 
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-cta rounded-lg flex items-center justify-center shadow-glow">
-                <span className="text-xl font-bold text-white">N</span>
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-cta rounded-xl flex items-center justify-center shadow-glow">
+                <span className="text-xl font-bold text-white">M</span>
               </div>
-              <span className="text-xl font-space-grotesk font-bold bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
+              <span className="text-2xl font-space-grotesk font-bold bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
                 Monda's Restaurant
               </span>
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
+          {/* Menu Items Section */}
+          <motion.div 
+            className="hidden md:flex items-center bg-background/20 backdrop-blur-md border border-primary/20 rounded-2xl px-6 py-3 shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {navItems.map((item, index) => (
               <Link key={item.name} to={item.href}>
-                <motion.span
-                  className={`font-medium transition-colors ${
+                <motion.div
+                  className={`relative px-4 py-2 mx-1 rounded-xl transition-all duration-300 ${
                     location.pathname === item.href 
-                      ? "text-primary font-semibold" 
+                      ? "text-primary font-semibold bg-primary/10" 
                       : "text-muted-foreground hover:text-foreground"
                   }`}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    backgroundColor: "rgba(var(--primary-rgb), 0.1)"
+                  }}
                   whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + index * 0.1 }}
                 >
-                  {item.name}
-                </motion.span>
+                  <span className="font-medium relative z-10">{item.name}</span>
+                  {location.pathname === item.href && (
+                    <motion.div
+                      className="absolute inset-0 bg-primary/20 backdrop-blur-sm rounded-xl"
+                      layoutId="activeTab"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </motion.div>
               </Link>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Action Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Action Buttons Section */}
+          <motion.div 
+            className="hidden md:flex items-center space-x-3"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
             <ThemeToggle />
             
             <Button 
               variant="ghost" 
               size="sm" 
-              className="relative"
+              className="relative hover:bg-primary/10 transition-colors"
               onClick={() => dispatch(toggleCart())}
             >
               <ShoppingCart size={20} />
               {items.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <motion.span 
+                  className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", bounce: 0.5 }}
+                >
                   {items.length}
-                </span>
+                </motion.span>
               )}
             </Button>
-            <Button variant="ghost" size="sm">
+            
+            <Button variant="ghost" size="sm" className="hover:bg-primary/10 transition-colors">
               <User size={20} />
             </Button>
-            <Button className="bg-primary hover:bg-primary/90" size="sm" asChild>
+            
+            <Button 
+              className="bg-background/20 backdrop-blur-md border border-primary/20 text-primary hover:bg-primary/10 rounded-2xl px-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105" 
+              size="sm" 
+              asChild
+            >
               <Link to="/reservations">Reserve</Link>
             </Button>
-          </div>
+          </motion.div>
 
           {/* Mobile Menu Button */}
           <button
