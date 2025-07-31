@@ -42,19 +42,21 @@ export const Cart = () => {
           </SheetTitle>
         </SheetHeader>
         
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full max-h-[90vh]">
           {showCheckout ? (
-            <div className="space-y-4">
+            <div className="space-y-4 overflow-y-auto flex-1">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => setShowCheckout(false)}
-                className="self-start"
+                className="self-start sticky top-0 bg-background z-10"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Cart
               </Button>
-              <CheckoutForm total={total} onSuccess={handleCheckoutSuccess} />
+              <div className="pb-4">
+                <CheckoutForm total={total} onSuccess={handleCheckoutSuccess} />
+              </div>
             </div>
           ) : items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">

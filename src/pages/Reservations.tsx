@@ -25,8 +25,10 @@ const Reservations = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
     if (!date || !formData.name || !formData.email || !formData.guests || !formData.time) {
       toast({
         title: "Missing Information",
@@ -35,22 +37,58 @@ const Reservations = () => {
       });
       return;
     }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Date validation (must be future date)
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     
-    toast({
-      title: "Reservation Submitted!",
-      description: `Your table for ${formData.guests} guests on ${format(date, "PPP")} at ${formData.time} has been requested.`,
-    });
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      guests: "",
-      time: "",
-      specialRequests: ""
-    });
-    setDate(undefined);
+    if (selectedDate < today) {
+      toast({
+        title: "Invalid Date",
+        description: "Please select a future date.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast({
+        title: "Reservation Confirmed!",
+        description: `Thank you ${formData.name}! Your table for ${formData.guests} guests on ${format(date, "PPP")} at ${formData.time} has been confirmed. We'll send you a confirmation email shortly.`,
+      });
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        guests: "",
+        time: "",
+        specialRequests: ""
+      });
+      setDate(undefined);
+    } catch (error) {
+      toast({
+        title: "Reservation Failed",
+        description: "Something went wrong. Please try again or call us directly.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
