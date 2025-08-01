@@ -1,27 +1,27 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Wine, Utensils, Crown, Clock } from "lucide-react";
+import { Wine, Utensils, Crown, Clock, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCountdown } from "@/hooks/useCountdown";
+import { useHappyHour } from "@/hooks/useHappyHour";
 import heroImage from "@/assets/hero-nebula.jpg";
 
 export const Hero = () => {
-  // Set target date for next wine tasting (7 days from now)
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + 7);
-  targetDate.setHours(19, 30, 0, 0); // 7:30 PM
+  // Set fixed target date for next wine tasting (December 31, 2024 at 7:30 PM)
+  const targetDate = new Date('2024-12-31T19:30:00');
   
   const { hours, minutes, seconds } = useCountdown(targetDate);
+  const { isHappyHour, happyHourInfo } = useHappyHour();
   return (
     <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Hero Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-background via-background/95 to-background/70"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-background/80 via-background/60 to-background/40"></div>
       
       {/* Floating Elements - Top Right */}
       <motion.div 
@@ -48,9 +48,25 @@ export const Hero = () => {
         <Crown size={28} />
       </motion.div>
 
-      {/* Wine Tasting Event - Center Right */}
+      {/* Happy Hour Banner - Top Center */}
+      {isHappyHour && (
+        <motion.div
+          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2">
+            <Sparkles className="h-5 w-5" />
+            <span className="font-semibold">Happy Hour Active! {happyHourInfo.discount}</span>
+            <span className="text-sm opacity-90">• {happyHourInfo.timeRemaining}</span>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Wine Tasting Event - Center Right (Moved Up) */}
       <motion.div
-        className="absolute top-1/2 right-20 transform -translate-y-1/2"
+        className="absolute top-1/3 right-12 md:right-20 transform -translate-y-1/2"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1 }}
@@ -98,7 +114,7 @@ export const Hero = () => {
       </motion.div>
 
       {/* Main Content - Bottom Left */}
-      <div className="relative z-10 px-6 pb-32 pl-12 max-w-4xl">
+      <div className="relative z-10 px-4 md:px-6 pb-24 md:pb-32 pl-6 md:pl-12 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
@@ -106,14 +122,14 @@ export const Hero = () => {
           className="text-left"
         >
           <motion.h1 
-            className="text-5xl md:text-7xl lg:text-8xl font-space-grotesk font-bold mb-6 leading-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-alex-brush mb-6 leading-tight"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <span className="text-gradient-primary">Monda's</span>
+            <span className="text-gradient-primary text-6xl md:text-8xl lg:text-9xl">Monda's</span>
             <br />
-            <span className="text-foreground">Restaurant</span>
+            <span className="text-foreground font-playfair font-medium text-2xl md:text-3xl lg:text-4xl tracking-wider">Restaurant</span>
           </motion.h1>
           
           <motion.div
@@ -122,11 +138,14 @@ export const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
           >
-            <p className="text-xl md:text-2xl font-space-grotesk text-muted-foreground">
+            <p className="text-xl md:text-2xl font-playfair text-muted-foreground">
               Restaurant • Bar • Vinothek
             </p>
-            <p className="text-lg md:text-xl text-muted-foreground/80 mt-2">
+            <p className="text-lg md:text-xl text-muted-foreground/80 mt-2 font-playfair">
               Classic Elegance • Timeless Flavors
+            </p>
+            <p className="text-base md:text-lg text-muted-foreground/70 mt-3 font-inter">
+              Mon - Sun: 10:00 – 23:00 • Hauptstraße 347, Königswinter
             </p>
           </motion.div>
           
@@ -149,7 +168,7 @@ export const Hero = () => {
             <Button 
               variant="default" 
               size="lg" 
-              className="px-8 py-4 text-lg font-semibold hover-scale"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold hover-scale font-playfair"
               asChild
             >
               <Link to="/menu">
@@ -161,7 +180,7 @@ export const Hero = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="px-8 py-4 text-lg font-semibold hover-scale border-primary/30 hover:bg-primary/10"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold hover-scale border-primary/30 hover:bg-primary/10 font-playfair"
               asChild
             >
               <Link to="/reservations">

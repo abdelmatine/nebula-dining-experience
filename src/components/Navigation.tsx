@@ -40,7 +40,7 @@ export const Navigation = () => {
               <div className="w-12 h-12 bg-gradient-to-br from-primary to-cta rounded-xl flex items-center justify-center shadow-glow">
                 <span className="text-xl font-bold text-white">M</span>
               </div>
-              <span className="text-2xl font-space-grotesk font-bold bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
+              <span className="text-3xl font-alex-brush bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
                 Monda's Restaurant
               </span>
             </motion.div>
@@ -70,7 +70,7 @@ export const Navigation = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + index * 0.1 }}
                 >
-                  <span className="font-medium relative z-10">{item.name}</span>
+                  <span className="font-playfair font-medium relative z-10">{item.name}</span>
                   {location.pathname === item.href && (
                     <motion.div
                       className="absolute inset-0 bg-primary/20 backdrop-blur-sm rounded-xl"

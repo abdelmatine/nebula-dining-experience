@@ -1,35 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, ExternalLink } from "lucide-react";
-import { InteractiveMap } from "@/components/InteractiveMap";
+import { SimpleMap } from "@/components/SimpleMap";
 
 const locations = [
   {
     id: 1,
-    name: "Monda's Downtown",
-    address: "123 Gourmet Street, New York, NY 10001",
-    phone: "+1 (555) 123-4567",
-    hours: "Mon-Thu: 5PM-10PM, Fri-Sat: 5PM-11PM, Sun: 4PM-9PM",
+    name: "Monda's Restaurant",
+    address: "Hauptstraße 347, 53639 Königswinter, Germany",
+    phone: "+49 (0) 2223 123-456",
+    hours: "Mon - Sun: 10:00 – 23:00",
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop",
-    mapUrl: "https://maps.google.com/?q=123+Gourmet+Street+New+York+NY"
-  },
-  {
-    id: 2,
-    name: "Monda's Uptown",
-    address: "456 Elite Avenue, New York, NY 10028",
-    phone: "+1 (555) 234-5678",
-    hours: "Mon-Thu: 6PM-10PM, Fri-Sat: 6PM-11PM, Sun: 5PM-9PM",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop",
-    mapUrl: "https://maps.google.com/?q=456+Elite+Avenue+New+York+NY"
-  },
-  {
-    id: 3,
-    name: "Monda's Riverside",
-    address: "789 Waterfront Drive, Brooklyn, NY 11201",
-    phone: "+1 (555) 345-6789",
-    hours: "Tue-Thu: 5PM-10PM, Fri-Sat: 5PM-11PM, Sun: 4PM-9PM",
-    image: "https://images.unsplash.com/photo-1559329007-40df8e3cbaf1?w=600&h=400&fit=crop",
-    mapUrl: "https://maps.google.com/?q=789+Waterfront+Drive+Brooklyn+NY"
+    mapUrl: "https://maps.google.com/?q=Hauptstraße+347+53639+Königswinter+Germany"
   }
 ];
 
@@ -50,7 +32,7 @@ export default function Locations() {
           </div>
 
           {/* Locations Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
             {locations.map((location) => (
               <Card key={location.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
@@ -99,7 +81,7 @@ export default function Locations() {
           {/* Interactive Map Section */}
           <div>
             <h2 className="text-3xl font-bold mb-8 text-center">Find Us on the Map</h2>
-            <InteractiveMap />
+            <SimpleMap />
           </div>
         </div>
       </div>

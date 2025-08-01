@@ -68,10 +68,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
-			fontFamily: {
-				'space-grotesk': ['Space Grotesk', 'sans-serif'],
-				'inter': ['Inter', 'sans-serif'],
-			},
+      fontFamily: {
+        'space-grotesk': ['Space Grotesk', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+        'alex-brush': ['Alex Brush', 'cursive'],
+        'playfair': ['Playfair Display', 'serif'],
+      },
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
