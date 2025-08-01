@@ -38,7 +38,7 @@ export const Navigation = () => {
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-12 h-12 bg-gradient-to-br from-primary to-cta rounded-xl flex items-center justify-center shadow-glow">
-                <span className="text-xl font-bold text-white">M</span>
+                <span className="text-xl font-alex-brush text-white">M</span>
               </div>
               <span className="text-3xl font-alex-brush bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
                 Monda's Restaurant
@@ -136,7 +136,7 @@ export const Navigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <motion.div
-            className="md:hidden mt-6 space-y-4"
+            className="md:hidden mt-6 bg-background/90 backdrop-blur-md border border-primary/20 rounded-2xl p-6 shadow-lg space-y-4"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}

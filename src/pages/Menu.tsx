@@ -5,7 +5,8 @@ import { addItem } from '@/store/cartSlice';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { MenuItemModal } from '@/components/MenuItemModal';
+import { Plus } from 'lucide-react';
 export default function Menu() {
   const dispatch = useAppDispatch();
   const { items, selectedItem, isDetailOpen, activeCategory } = useAppSelector(state => state.menu);
@@ -29,8 +30,8 @@ export default function Menu() {
     <div className="min-h-screen bg-background">
       <div className="pt-24 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Our Menu</h1>
-          <p className="text-muted-foreground">Discover our delicious selection</p>
+          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">Our Menu</h1>
+          <p className="text-xl text-muted-foreground font-playfair">Discover our delicious selection</p>
         </div>
 
         {/* Category Filters */}
@@ -75,6 +76,7 @@ export default function Menu() {
                     size="sm"
                     onClick={() => handleAddToCart(item)}
                   >
+                    <Plus className="mr-1 h-4 w-4" />
                     Add to Cart
                   </Button>
                 </div>
@@ -83,55 +85,11 @@ export default function Menu() {
           ))}
         </div>
 
-        {/* Item Detail Dialog */}
-        <Dialog open={isDetailOpen} onOpenChange={() => dispatch({ type: 'menu/closeDetail' })}>
-          <DialogContent className="max-w-2xl">
-            {selectedItem && (
-              <>
-                <DialogHeader>
-                  <DialogTitle>{selectedItem.name}</DialogTitle>
-                </DialogHeader>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <img 
-                    src={selectedItem.image} 
-                    alt={selectedItem.name}
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                  <div>
-                    <p className="text-muted-foreground mb-4">{selectedItem.description}</p>
-                    <div className="mb-4">
-                      <h4 className="font-semibold mb-2">Ingredients:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {selectedItem.ingredients.map(ingredient => (
-                          <Badge key={ingredient} variant="outline">
-                            {ingredient}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    {selectedItem.nutrition && (
-                      <div className="mb-4">
-                        <h4 className="font-semibold mb-2">Nutrition per serving:</h4>
-                        <div className="grid grid-cols-2 gap-2 text-sm">
-                          <span>Calories: {selectedItem.nutrition.calories}</span>
-                          <span>Protein: {selectedItem.nutrition.protein}g</span>
-                          <span>Carbs: {selectedItem.nutrition.carbs}g</span>
-                          <span>Fat: {selectedItem.nutrition.fat}g</span>
-                        </div>
-                      </div>
-                    )}
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-xl">${selectedItem.price}</span>
-                      <Button onClick={() => handleAddToCart(selectedItem)}>
-                        Add to Cart
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
+        {/* Item Detail Modal */}
+        <MenuItemModal 
+          item={selectedItem} 
+          isOpen={isDetailOpen} 
+        />
       </div>
     </div>
   );

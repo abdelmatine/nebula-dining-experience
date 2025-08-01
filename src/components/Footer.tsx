@@ -31,10 +31,10 @@ export const Footer = () => {
             <h3 className="font-semibold">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link to="/menu" className="text-muted-foreground hover:text-foreground transition-colors">Menu</Link></li>
+              <li><Link to="/locations" className="text-muted-foreground hover:text-foreground transition-colors">Locations</Link></li>
               <li><Link to="/reservations" className="text-muted-foreground hover:text-foreground transition-colors">Reservations</Link></li>
               <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
               <li><Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
-              <li><Link to="/locations" className="text-muted-foreground hover:text-foreground transition-colors">Locations</Link></li>
             </ul>
           </div>
 
@@ -44,7 +44,7 @@ export const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">123 Gourmet Street, NY 10001</span>
+                <span className="text-muted-foreground text-sm">Hauptstraße 347 Königswinter 53639</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary" />
@@ -62,16 +62,8 @@ export const Footer = () => {
             <h3 className="font-semibold">Opening Hours</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex justify-between">
-                <span>Mon - Thu:</span>
-                <span>5:00 PM - 10:00 PM</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Fri - Sat:</span>
-                <span>5:00 PM - 11:00 PM</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Sunday:</span>
-                <span>4:00 PM - 9:00 PM</span>
+                <span>Mon - Son:</span>
+                <span>10:00 - 23:00</span>
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ export const Hero = () => {
     <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Hero Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90 dark:opacity-60"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       
@@ -51,12 +51,12 @@ export const Hero = () => {
       {/* Happy Hour Banner - Top Center */}
       {isHappyHour && (
         <motion.div
-          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute top-32 left-1/2 transform -translate-x-1/2 z-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2">
+          <div className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2 shadow-lg">
             <Sparkles className="h-5 w-5" />
             <span className="font-semibold">Happy Hour Active! {happyHourInfo.discount}</span>
             <span className="text-sm opacity-90">• {happyHourInfo.timeRemaining}</span>
@@ -64,9 +64,9 @@ export const Hero = () => {
         </motion.div>
       )}
 
-      {/* Wine Tasting Event - Center Right (Moved Up) */}
+      {/* Wine Tasting Event - Center Right */}
       <motion.div
-        className="absolute top-1/3 right-12 md:right-20 transform -translate-y-1/2"
+        className="absolute top-1/2 right-12 md:right-20 transform -translate-y-1/2"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1 }}
