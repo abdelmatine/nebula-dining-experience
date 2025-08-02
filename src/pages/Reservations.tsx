@@ -12,6 +12,7 @@ import { CalendarIcon, Clock, Users, Utensils } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { EmailVerification } from "@/components/EmailVerification";
 
 const Reservations = () => {
   const [date, setDate] = useState<Date>();
@@ -23,6 +24,7 @@ const Reservations = () => {
     time: "",
     specialRequests: ""
   });
+  const [showEmailVerification, setShowEmailVerification] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,36 +65,30 @@ const Reservations = () => {
       return;
     }
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast({
-        title: "Reservation Confirmed!",
-        description: `Thank you ${formData.name}! Your table for ${formData.guests} guests on ${format(date, "PPP")} at ${formData.time} has been confirmed. We'll send you a confirmation email shortly.`,
-      });
-      
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        guests: "",
-        time: "",
-        specialRequests: ""
-      });
-      setDate(undefined);
-    } catch (error) {
-      toast({
-        title: "Reservation Failed",
-        description: "Something went wrong. Please try again or call us directly.",
-        variant: "destructive"
-      });
-    }
+    // Show email verification modal
+    setShowEmailVerification(true);
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleEmailVerified = () => {
+    toast({
+      title: "Reservation Confirmed!",
+      description: `Thank you ${formData.name}! Your table for ${formData.guests} guests on ${format(date!, "PPP")} at ${formData.time} has been confirmed.`,
+    });
+    
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      guests: "",
+      time: "",
+      specialRequests: ""
+    });
+    setDate(undefined);
   };
 
   return (
@@ -104,7 +100,7 @@ const Reservations = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl font-space-grotesk font-bold mb-6">
+          <h1 className="text-5xl font-alex-brush font-bold mb-6">
             Reserve Your <span className="text-gradient-primary">Table</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -242,6 +238,15 @@ const Reservations = () => {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* Email Verification Modal */}
+        <EmailVerification
+          isOpen={showEmailVerification}
+          onClose={() => setShowEmailVerification(false)}
+          email={formData.email}
+          onVerified={handleEmailVerified}
+          type="reservation"
+        />
       </div>
     </div>
   );

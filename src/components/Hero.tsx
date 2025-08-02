@@ -51,22 +51,22 @@ export const Hero = () => {
       {/* Happy Hour Banner - Top Center */}
       {isHappyHour && (
         <motion.div
-          className="absolute top-32 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute top-28 md:top-32 left-1/2 transform -translate-x-1/2 z-20 px-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2 shadow-lg">
-            <Sparkles className="h-5 w-5" />
+          <div className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-3 md:px-6 py-2 md:py-3 rounded-full flex items-center gap-2 shadow-lg text-sm md:text-base">
+            <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
             <span className="font-semibold">Happy Hour Active! {happyHourInfo.discount}</span>
-            <span className="text-sm opacity-90">• {happyHourInfo.timeRemaining}</span>
+            <span className="text-xs md:text-sm opacity-90 hidden sm:inline">• {happyHourInfo.timeRemaining}</span>
           </div>
         </motion.div>
       )}
 
       {/* Wine Tasting Event - Center Right */}
       <motion.div
-        className="absolute top-1/2 right-12 md:right-20 transform -translate-y-1/2"
+        className="absolute top-1/3 md:top-1/2 right-4 md:right-12 lg:right-20 transform -translate-y-1/2"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1 }}
@@ -74,7 +74,7 @@ export const Hero = () => {
         <div className="relative">
           {/* Clock Circle Background */}
           <motion.div 
-            className="w-48 h-48 border-2 border-primary/30 rounded-full flex items-center justify-center bg-background/20 backdrop-blur-sm"
+            className="w-32 h-32 md:w-48 md:h-48 border-2 border-primary/30 rounded-full flex items-center justify-center bg-background/20 backdrop-blur-sm"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           >
@@ -87,12 +87,12 @@ export const Hero = () => {
           </motion.div>
           
           {/* Event Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-            <Clock className="h-6 w-6 text-primary mb-2" />
-            <div className="text-sm font-space-grotesk font-semibold text-primary mb-1">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2 md:p-4">
+            <Clock className="h-4 w-4 md:h-6 md:w-6 text-primary mb-1 md:mb-2" />
+            <div className="text-xs md:text-sm font-space-grotesk font-semibold text-primary mb-1">
               Wine Tasting
             </div>
-            <div className="text-2xl font-bold text-gradient-primary mb-1">
+            <div className="text-lg md:text-2xl font-bold text-gradient-primary mb-1">
               {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
             </div>
             <div className="text-xs text-muted-foreground">
@@ -129,7 +129,7 @@ export const Hero = () => {
           >
             <span className="text-gradient-primary text-6xl md:text-8xl lg:text-9xl">Monda's</span>
             <br />
-            <span className="text-foreground font-playfair font-medium text-2xl md:text-3xl lg:text-4xl tracking-wider">Restaurant</span>
+            
           </motion.h1>
           
           <motion.div
@@ -138,19 +138,19 @@ export const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
           >
-            <p className="text-xl md:text-2xl font-playfair text-muted-foreground">
+            <p className="text-xl md:text-2xl font-playfair text-foreground dark:text-muted-foreground">
               Restaurant • Bar • Vinothek
             </p>
-            <p className="text-lg md:text-xl text-muted-foreground/80 mt-2 font-playfair">
+            <p className="text-lg md:text-xl text-foreground/90 dark:text-muted-foreground/80 mt-2 font-playfair">
               Classic Elegance • Timeless Flavors
             </p>
-            <p className="text-base md:text-lg text-muted-foreground/70 mt-3 font-inter">
+            <p className="text-base md:text-lg text-foreground/80 dark:text-muted-foreground/70 mt-3 font-inter">
               Mon - Sun: 10:00 – 23:00 • Hauptstraße 347, Königswinter
             </p>
           </motion.div>
           
           <motion.p
-            className="text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed"
+            className="text-lg text-foreground/80 dark:text-muted-foreground mb-8 max-w-lg leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}

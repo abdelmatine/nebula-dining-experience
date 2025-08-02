@@ -42,13 +42,13 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-space-grotesk font-bold mb-6">
-              About <span className="text-gradient-primary">Nebula Bistro</span>
+            <h1 className="text-5xl md:text-6xl font-alex-brush font-bold mb-6">
+              About <span className="text-gradient-primary">Monda's</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Founded in 2015, Nebula Bistro has been serving exceptional cuisine that combines traditional flavors 
+              Founded in 2015, Monda's has been serving exceptional cuisine that combines traditional flavors 
               with modern innovation. Our commitment to quality ingredients and artistic presentation has made us 
-              a destination for food lovers.
+              a destination for food lovers in Königswinter.
             </p>
           </motion.div>
 
@@ -86,7 +86,7 @@ const About = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-space-grotesk font-bold mb-6">
+              <h2 className="text-4xl font-alex-brush font-bold mb-6">
                 Our Story
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
@@ -100,7 +100,7 @@ const About = () => {
                 together and create lasting memories.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Today, Nebula Bistro continues to push culinary boundaries while staying true 
+                Today, Monda's continues to push culinary boundaries while staying true 
                 to our core values of quality, creativity, and exceptional service.
               </p>
             </motion.div>
@@ -131,7 +131,7 @@ const About = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-space-grotesk font-bold mb-6">
+            <h2 className="text-4xl font-alex-brush font-bold mb-6">
               Meet Our <span className="text-gradient-primary">Team</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { MenuItemModal } from '@/components/MenuItemModal';
-import { Plus } from 'lucide-react';
+import { Plus, Star } from 'lucide-react';
 export default function Menu() {
   const dispatch = useAppDispatch();
   const { items, selectedItem, isDetailOpen, activeCategory } = useAppSelector(state => state.menu);
@@ -63,6 +63,15 @@ export default function Menu() {
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
                 <p className="text-muted-foreground text-sm mb-3">{item.description}</p>
+                
+                {/* Rating */}
+                <div className="flex items-center gap-1 mb-3">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-white text-white" />
+                  ))}
+                  <span className="text-sm text-muted-foreground ml-2">(4.8)</span>
+                </div>
+                
                 <div className="flex flex-wrap gap-1 mb-3">
                   {item.tags.map(tag => (
                     <Badge key={tag} variant="secondary" className="text-xs">

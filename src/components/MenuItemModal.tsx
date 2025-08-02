@@ -36,15 +36,7 @@ export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-alex-brush">{item.name}</DialogTitle>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="absolute right-4 top-4"
-            onClick={handleClose}
-          >
-            <X className="h-4 w-4" />
-          </Button>
+          <DialogTitle className="text-2xl font-playfair font-semibold">{item.name}</DialogTitle>
         </DialogHeader>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -59,11 +51,11 @@ export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
             </div>
             
             {/* Additional images placeholder */}
-            <div className="grid grid-cols-3 gap-2">
-              {[1, 2, 3].map((i) => (
+            <div className="grid grid-cols-3 gap-2 max-h-24 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-muted">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div 
                   key={i} 
-                  className="aspect-square rounded-lg overflow-hidden bg-muted"
+                  className="aspect-square rounded-lg overflow-hidden bg-muted cursor-pointer hover:opacity-80 transition-opacity"
                 >
                   <img
                     src={item.image}
@@ -81,7 +73,7 @@ export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
               <p className="text-muted-foreground text-lg mb-4">{item.description}</p>
               <div className="flex items-center gap-2 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  <Star key={i} className="h-4 w-4 fill-white text-white" />
                 ))}
                 <span className="text-sm text-muted-foreground">(4.8) • 124 reviews</span>
               </div>

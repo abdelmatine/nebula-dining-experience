@@ -62,8 +62,8 @@ export const Footer = () => {
             <h3 className="font-semibold">Opening Hours</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex justify-between">
-                <span>Mon - Son:</span>
-                <span>10:00 - 23:00</span>
+                <span>Mon - Sun:</span>
+                <span>10:00 – 23:00</span>
               </div>
             </div>
           </div>

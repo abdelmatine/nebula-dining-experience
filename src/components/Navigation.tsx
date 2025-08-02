@@ -38,10 +38,10 @@ export const Navigation = () => {
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-12 h-12 bg-gradient-to-br from-primary to-cta rounded-xl flex items-center justify-center shadow-glow">
-                <span className="text-xl font-alex-brush text-white">M</span>
+                <span className="text-2xl font-alex-brush text-white">M</span>
               </div>
               <span className="text-3xl font-alex-brush bg-gradient-to-r from-primary to-cta bg-clip-text text-transparent">
-                Monda's Restaurant
+                Monda's
               </span>
             </motion.div>
           </Link>

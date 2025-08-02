@@ -49,8 +49,8 @@ export const FeaturedDishes = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-space-grotesk font-bold mb-6">
-            <span className="text-gradient-nebula">Featured</span> Specialties
+          <h2 className="text-5xl font-alex-brush font-bold mb-6">
+            <span className="text-gradient-primary">Featured</span> Specialties
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Discover our signature dishes crafted with the finest ingredients and traditional techniques
@@ -81,13 +81,13 @@ export const FeaturedDishes = () => {
                     </div>
                   )}
                   <div className="absolute top-4 right-4 flex items-center bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
-                    <Star className="text-yellow-400 fill-current mr-1" size={14} />
-                    <span className="text-sm font-medium">{dish.rating}</span>
+                    <Star className="text-white fill-white mr-1" size={14} />
+                    <span className="text-sm font-medium text-white">{dish.rating}</span>
                   </div>
                 </div>
                 
                 <CardContent className="p-6">
-                  <h3 className="text-2xl font-space-grotesk font-bold mb-2 group-hover:text-gradient-primary transition-all">
+                  <h3 className="text-2xl font-playfair font-bold mb-2 group-hover:text-gradient-primary transition-all">
                     {dish.name}
                   </h3>
                   <p className="text-muted-foreground mb-4 leading-relaxed">
@@ -95,7 +95,7 @@ export const FeaturedDishes = () => {
                   </p>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gradient-nebula">
+                    <span className="text-3xl font-bold text-gradient-primary">
                       ${dish.price}
                     </span>
                     <Button 

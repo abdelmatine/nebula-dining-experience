@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { EmailVerification } from '@/components/EmailVerification';
 
 interface CheckoutFormProps {
   total: number;
@@ -14,6 +15,7 @@ interface CheckoutFormProps {
 
 export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
   const { toast } = useToast();
+  const [showEmailVerification, setShowEmailVerification] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +34,17 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
     }));
   };
 
+  const handleEmailVerified = () => {
+    toast({
+      title: "Order Placed Successfully!",
+      description: `Thank you ${formData.name}! Your order will be delivered to ${formData.address}.`,
+    });
+
+    setTimeout(() => {
+      onSuccess();
+    }, 2000);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -45,15 +58,8 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
       return;
     }
 
-    // Simulate order processing
-    toast({
-      title: "Order Placed Successfully!",
-      description: `Thank you ${formData.name}! Your order will be delivered to ${formData.address}.`,
-    });
-
-    setTimeout(() => {
-      onSuccess();
-    }, 2000);
+    // Show email verification modal
+    setShowEmailVerification(true);
   };
 
   const finalTotal = total + (total * 0.085) + 2.99;
@@ -186,6 +192,15 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
           </div>
         </form>
       </CardContent>
+      
+      {/* Email Verification Modal */}
+      <EmailVerification
+        isOpen={showEmailVerification}
+        onClose={() => setShowEmailVerification(false)}
+        email={formData.email}
+        onVerified={handleEmailVerified}
+        type="order"
+      />
     </Card>
   );
 };

@@ -49,22 +49,22 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Address",
-      details: ["123 Nebula Street", "Downtown District", "New York, NY 10001"]
+      details: ["Hauptstraße 347", "Königswinter 53639", "Germany"]
     },
     {
       icon: Phone,
       title: "Phone",
-      details: ["+1 (555) 123-4567", "+1 (555) 123-4568"]
+      details: ["+49 (0) 2223 123-456", "+49 (0) 2223 123-457"]
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@nebulabistro.com", "reservations@nebulabistro.com"]
+      details: ["info@mondas-restaurant.com", "reservations@mondas-restaurant.com"]
     },
     {
       icon: Clock,
       title: "Hours",
-      details: ["Mon-Thu: 5:00 PM - 10:00 PM", "Fri-Sat: 5:00 PM - 11:00 PM", "Sun: 5:00 PM - 9:00 PM"]
+      details: ["Mon - Sun: 10:00 – 23:00"]
     }
   ];
 
@@ -77,7 +77,7 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl font-space-grotesk font-bold mb-6">
+          <h1 className="text-5xl font-alex-brush font-bold mb-6">
             Get In <span className="text-gradient-primary">Touch</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -193,7 +193,7 @@ const Contact = () => {
                     <MapPin className="h-8 w-8 text-primary mx-auto mb-2" />
                     <p className="text-muted-foreground">Interactive Map</p>
                     <p className="text-sm text-muted-foreground">
-                      123 Nebula Street, Downtown District
+                      Hauptstraße 347, Königswinter 53639
                     </p>
                   </div>
                 </div>
