@@ -19,13 +19,13 @@ export default function Locations() {
   return (
     <div className="min-h-screen bg-background">
       
-      <div className="pt-24 px-6">
+      <div className="pt-24 px-6 animate-fade-in">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-space-grotesk font-bold mb-4">
-              Our <span className="text-gradient-nebula">Locations</span>
-            </h1>
+          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
+            Our Locations
+          </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Visit any of our elegant locations for an unforgettable dining experience
             </p>

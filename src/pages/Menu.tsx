@@ -28,7 +28,7 @@ export default function Menu() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="pt-24 px-6 max-w-7xl mx-auto">
+      <div className="pt-24 px-6 max-w-7xl mx-auto animate-fade-in">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">Our Menu</h1>
           <p className="text-xl text-muted-foreground font-playfair">Discover our delicious selection</p>

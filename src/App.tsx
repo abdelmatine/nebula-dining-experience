@@ -15,6 +15,7 @@ import RestaurantCorners from "./pages/RestaurantCorners";
 import Reservations from "./pages/Reservations";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { Footer } from "./components/Footer";
 
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/reservations" element={<Reservations />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<Admin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

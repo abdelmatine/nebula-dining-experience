@@ -1,17 +1,43 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Wine, Utensils, Crown, Clock, Sparkles } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Wine, Utensils, Crown, Clock, Sparkles, Calendar, MapPin, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useHappyHour } from "@/hooks/useHappyHour";
 import heroImage from "@/assets/hero-nebula.jpg";
 
 export const Hero = () => {
-  // Set fixed target date for next wine tasting (December 31, 2024 at 7:30 PM)
-  const targetDate = new Date('2024-12-31T19:30:00');
-  
+  // Calculate next Saturday at 9 PM
+  const getNextSaturday9PM = () => {
+    const now = new Date();
+    const nextSaturday = new Date();
+    const daysUntilSaturday = (6 - now.getDay()) % 7;
+    
+    if (daysUntilSaturday === 0 && now.getHours() >= 21) {
+      // If it's Saturday after 9 PM, get next Saturday
+      nextSaturday.setDate(now.getDate() + 7);
+    } else {
+      nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+    }
+    
+    nextSaturday.setHours(21, 0, 0, 0);
+    return nextSaturday;
+  };
+
+  const [targetDate, setTargetDate] = useState(getNextSaturday9PM());
+  const [showEventModal, setShowEventModal] = useState(false);
   const { hours, minutes, seconds } = useCountdown(targetDate);
   const { isHappyHour, happyHourInfo } = useHappyHour();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTargetDate(getNextSaturday9PM());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Hero Background Image */}
@@ -21,7 +47,7 @@ export const Hero = () => {
       />
       
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-background/80 via-background/60 to-background/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-background/90 via-background/70 to-background/50 dark:from-background/80 dark:via-background/60 dark:to-background/40"></div>
       
       {/* Floating Elements - Top Right */}
       <motion.div 
@@ -64,17 +90,18 @@ export const Hero = () => {
         </motion.div>
       )}
 
-      {/* Wine Tasting Event - Center Right */}
+      {/* Next Event - Center Right */}
       <motion.div
-        className="absolute top-1/3 md:top-1/2 right-4 md:right-12 lg:right-20 transform -translate-y-1/2"
+        className="absolute top-1/3 md:top-1/2 right-4 md:right-12 lg:right-20 transform -translate-y-1/2 cursor-pointer"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1 }}
+        onClick={() => setShowEventModal(true)}
       >
         <div className="relative">
           {/* Clock Circle Background */}
           <motion.div 
-            className="w-32 h-32 md:w-48 md:h-48 border-2 border-primary/30 rounded-full flex items-center justify-center bg-background/20 backdrop-blur-sm"
+            className="w-32 h-32 md:w-48 md:h-48 border-2 border-primary/30 rounded-full flex items-center justify-center bg-background/20 backdrop-blur-sm hover:bg-background/30 transition-colors"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           >
@@ -90,17 +117,79 @@ export const Hero = () => {
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2 md:p-4">
             <Clock className="h-4 w-4 md:h-6 md:w-6 text-primary mb-1 md:mb-2" />
             <div className="text-xs md:text-sm font-space-grotesk font-semibold text-primary mb-1">
-              Wine Tasting
+              Next Event
             </div>
             <div className="text-lg md:text-2xl font-bold text-gradient-primary mb-1">
               {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
             </div>
             <div className="text-xs text-muted-foreground">
-              20 seats only
+              Click for details
             </div>
           </div>
         </div>
       </motion.div>
+
+      {/* Event Details Modal */}
+      <Dialog open={showEventModal} onOpenChange={setShowEventModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-alex-brush text-center text-gradient-primary">
+              Wine Tasting Experience
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Wine className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-playfair font-semibold mb-2">Premium Wine Selection</h3>
+              <p className="text-muted-foreground">
+                Join us for an exclusive wine tasting featuring carefully selected premium wines from renowned vineyards.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <Calendar className="h-5 w-5 text-primary" />
+                <div>
+                  <p className="font-semibold">Every Saturday</p>
+                  <p className="text-sm text-muted-foreground">9:00 PM - 11:00 PM</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <MapPin className="h-5 w-5 text-primary" />
+                <div>
+                  <p className="font-semibold">Private Tasting Room</p>
+                  <p className="text-sm text-muted-foreground">Hauptstraße 347, Königswinter</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <Users className="h-5 w-5 text-primary" />
+                <div>
+                  <p className="font-semibold">Limited Seating</p>
+                  <p className="text-sm text-muted-foreground">20 seats only - Reservation required</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center space-y-3">
+              <p className="text-lg font-semibold">€45 per person</p>
+              <p className="text-sm text-muted-foreground">
+                Includes 5 wine tastings, artisan cheese selection, and expert sommelier guidance
+              </p>
+              
+              <Button className="w-full" asChild>
+                <Link to="/reservations">
+                  Reserve Your Spot
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Decorative Elements - Background */}
       <motion.div 

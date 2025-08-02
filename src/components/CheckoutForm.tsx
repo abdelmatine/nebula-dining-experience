@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { EmailVerification } from '@/components/EmailVerification';
+import { RealEmailVerification } from '@/components/RealEmailVerification';
+import { PaymentMethodSelector } from '@/components/PaymentMethodSelector';
 
 interface CheckoutFormProps {
   total: number;
@@ -16,6 +17,8 @@ interface CheckoutFormProps {
 export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
   const { toast } = useToast();
   const [showEmailVerification, setShowEmailVerification] = useState(false);
+  const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'delivery' | 'card' | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,6 +48,12 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
     }, 2000);
   };
 
+  const handlePaymentMethodSelect = (method: 'delivery' | 'card', details?: any) => {
+    setSelectedPaymentMethod(method);
+    setShowPaymentMethod(false);
+    setShowEmailVerification(true);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -58,8 +67,8 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
       return;
     }
 
-    // Show email verification modal
-    setShowEmailVerification(true);
+    // Show payment method selection
+    setShowPaymentMethod(true);
   };
 
   const finalTotal = total + (total * 0.085) + 2.99;
@@ -187,14 +196,28 @@ export const CheckoutForm = ({ total, onSuccess }: CheckoutFormProps) => {
             </div>
             
             <Button type="submit" className="w-full" size="lg">
-              Place Order - ${finalTotal.toFixed(2)}
+              Continue to Payment
             </Button>
           </div>
         </form>
       </CardContent>
       
+      {/* Payment Method Selection */}
+      {showPaymentMethod && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-background border rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <PaymentMethodSelector
+                onPaymentMethodSelect={handlePaymentMethodSelect}
+                total={total}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Email Verification Modal */}
-      <EmailVerification
+      <RealEmailVerification
         isOpen={showEmailVerification}
         onClose={() => setShowEmailVerification(false)}
         email={formData.email}
