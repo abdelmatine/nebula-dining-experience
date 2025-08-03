@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   Settings, 
   PlusCircle, 
@@ -21,7 +22,9 @@ import {
   MapPin,
   Edit,
   Trash2,
-  Eye
+  Eye,
+  BarChart3,
+  Package
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -167,13 +170,97 @@ export default function Admin() {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="menu" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="menu">Menu Management</TabsTrigger>
+        <Tabs defaultValue="dashboard" className="space-y-8">
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="menu">Menu</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="reservations">Reservations</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+
+          {/* Dashboard Overview */}
+          <TabsContent value="dashboard" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Today's Revenue</CardTitle>
+                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">€2,345</div>
+                  <p className="text-xs text-muted-foreground">+15% from yesterday</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Active Orders</CardTitle>
+                  <Package className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">23</div>
+                  <p className="text-xs text-muted-foreground">3 pending pickup</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Table Bookings</CardTitle>
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">12</div>
+                  <p className="text-xs text-muted-foreground">Today's reservations</p>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Orders</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {mockRecentOrders.slice(0, 3).map((order) => (
+                      <div key={order.id} className="flex items-center justify-between border-b pb-2">
+                        <div>
+                          <p className="font-medium">{order.customer}</p>
+                          <p className="text-sm text-muted-foreground">€{order.total}</p>
+                        </div>
+                        <Badge variant={order.status === 'delivered' ? 'default' : 'secondary'}>
+                          {order.status}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle>Today's Reservations</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {mockReservations.slice(0, 3).map((reservation) => (
+                      <div key={reservation.id} className="flex items-center justify-between border-b pb-2">
+                        <div>
+                          <p className="font-medium">{reservation.customer}</p>
+                          <p className="text-sm text-muted-foreground">{reservation.time} - {reservation.guests} guests</p>
+                        </div>
+                        <Badge variant={reservation.status === 'confirmed' ? 'default' : 'outline'}>
+                          {reservation.status}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
           {/* Menu Management */}
           <TabsContent value="menu" className="space-y-6">
@@ -344,6 +431,66 @@ export default function Admin() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Analytics */}
+          <TabsContent value="analytics" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Weekly Sales</CardTitle>
+                  <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">€15,234</div>
+                  <p className="text-xs text-muted-foreground">+22% from last week</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Popular Dish</CardTitle>
+                  <ChefHat className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-lg font-bold">Truffle Pasta</div>
+                  <p className="text-xs text-muted-foreground">45 orders this week</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Customer Rating</CardTitle>
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">4.8</div>
+                  <p className="text-xs text-muted-foreground">Based on 127 reviews</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Peak Hours</CardTitle>
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-lg font-bold">7:00 - 9:00 PM</div>
+                  <p className="text-xs text-muted-foreground">Busiest time today</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Sales Overview</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="h-64 flex items-center justify-center text-muted-foreground">
+                  Sales chart would be displayed here
                 </div>
               </CardContent>
             </Card>

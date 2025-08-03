@@ -8,11 +8,12 @@ import { MenuItem } from "@/store/menuSlice";
 import { X, Plus, Star } from "lucide-react";
 
 interface MenuItemModalProps {
-  item: MenuItem | null;
+  item: any;
   isOpen: boolean;
+  onClose?: () => void;
 }
 
-export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
+export const MenuItemModal = ({ item, isOpen, onClose }: MenuItemModalProps) => {
   const dispatch = useAppDispatch();
 
   const handleAddToCart = () => {
@@ -27,7 +28,11 @@ export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
   };
 
   const handleClose = () => {
-    dispatch(closeDetail());
+    if (onClose) {
+      onClose();
+    } else {
+      dispatch(closeDetail());
+    }
   };
 
   if (!item) return null;
@@ -73,7 +78,7 @@ export const MenuItemModal = ({ item, isOpen }: MenuItemModalProps) => {
               <p className="text-muted-foreground text-lg mb-4">{item.description}</p>
               <div className="flex items-center gap-2 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-white text-white" />
+                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                 ))}
                 <span className="text-sm text-muted-foreground">(4.8) • 124 reviews</span>
               </div>

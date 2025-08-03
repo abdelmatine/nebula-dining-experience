@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
 import { setSelectedItem, setActiveCategory } from '@/store/menuSlice';
 import { addItem } from '@/store/cartSlice';
@@ -29,10 +30,17 @@ export default function Menu() {
   return (
     <div className="min-h-screen bg-background">
       <div className="pt-24 px-6 max-w-7xl mx-auto animate-fade-in">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">Our Menu</h1>
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
+            <span className="text-white font-bold">Our</span> Menu
+          </h1>
           <p className="text-xl text-muted-foreground font-playfair">Discover our delicious selection</p>
-        </div>
+        </motion.div>
 
         {/* Category Filters */}
         <div className="flex flex-wrap gap-2 mb-8 justify-center">
@@ -49,50 +57,64 @@ export default function Menu() {
         </div>
 
         {/* Menu Items Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredItems.map(item => (
-            <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <CardHeader className="p-0">
-                <img 
-                  src={item.image} 
-                  alt={item.name}
-                  className="w-full h-48 object-cover cursor-pointer"
-                  onClick={() => dispatch(setSelectedItem(item))}
-                />
-              </CardHeader>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
-                <p className="text-muted-foreground text-sm mb-3">{item.description}</p>
-                
-                {/* Rating */}
-                <div className="flex items-center gap-1 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-white text-white" />
-                  ))}
-                  <span className="text-sm text-muted-foreground ml-2">(4.8)</span>
-                </div>
-                
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {item.tags.map(tag => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-lg">${item.price}</span>
-                  <Button 
-                    size="sm"
-                    onClick={() => handleAddToCart(item)}
-                  >
-                    <Plus className="mr-1 h-4 w-4" />
-                    Add to Cart
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {filteredItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => dispatch(setSelectedItem(item))}>
+                <CardHeader className="p-0">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-full h-48 object-cover"
+                  />
+                </CardHeader>
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
+                  <p className="text-muted-foreground text-sm mb-3">{item.description}</p>
+                  
+                  {/* Rating */}
+                  <div className="flex items-center gap-1 mb-3">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                    ))}
+                    <span className="text-sm text-muted-foreground ml-2">(4.8)</span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {item.tags.map(tag => (
+                      <Badge key={tag} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-lg">${item.price}</span>
+                    <Button 
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(item);
+                      }}
+                    >
+                      <Plus className="mr-1 h-4 w-4" />
+                      Add to Cart
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Item Detail Modal */}
         <MenuItemModal 

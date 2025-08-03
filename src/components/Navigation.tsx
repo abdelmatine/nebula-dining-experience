@@ -54,7 +54,7 @@ export const Navigation = () => {
             transition={{ delay: 0.3 }}
           >
             {navItems.map((item, index) => (
-              <Link key={item.name} to={item.href}>
+              <Link key={item.name} to={item.href} onClick={() => window.scrollTo(0, 0)}>
                 <motion.div
                   className={`relative px-4 py-2 mx-1 rounded-xl transition-all duration-300 ${
                     location.pathname === item.href 
@@ -150,7 +150,10 @@ export const Navigation = () => {
                     ? "text-primary font-semibold" 
                     : "text-muted-foreground hover:text-foreground"
                 }`}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  window.scrollTo(0, 0);
+                }}
               >
                 {item.name}
               </Link>

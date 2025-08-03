@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, ExternalLink } from "lucide-react";
@@ -22,61 +23,78 @@ export default function Locations() {
       <div className="pt-24 px-6 animate-fade-in">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
-            Our Locations
-          </h1>
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
+              <span className="text-white font-bold">Our</span> Locations
+            </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Visit any of our elegant locations for an unforgettable dining experience
             </p>
-          </div>
+          </motion.div>
 
           {/* Locations Grid */}
-          <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
-            {locations.map((location) => (
-              <Card key={location.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <img 
-                    src={location.image} 
-                    alt={location.name}
-                    className="w-full h-48 object-cover"
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle className="font-space-grotesk">{location.name}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground text-sm">{location.address}</span>
+          <motion.div 
+            className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            {locations.map((location, index) => (
+              <motion.div
+                key={location.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <img 
+                      src={location.image} 
+                      alt={location.name}
+                      className="w-full h-48 object-cover"
+                    />
                   </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-muted-foreground text-sm">{location.phone}</span>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground text-sm">{location.hours}</span>
-                  </div>
-                  
-                  <div className="pt-4 space-y-2">
-                    <Button 
-                      className="w-full" 
-                      onClick={() => window.open(location.mapUrl, '_blank')}
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      View on Map
-                    </Button>
-                    <Button variant="outline" className="w-full" asChild>
-                      <a href="/reservations">Make Reservation</a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  <CardHeader>
+                    <CardTitle className="font-space-grotesk">{location.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground text-sm">{location.address}</span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground text-sm">{location.phone}</span>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground text-sm">{location.hours}</span>
+                    </div>
+                    
+                    <div className="pt-4 space-y-2">
+                      <Button 
+                        className="w-full" 
+                        onClick={() => window.open(location.mapUrl, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View on Map
+                      </Button>
+                      <Button variant="outline" className="w-full" asChild>
+                        <a href="/reservations">Make Reservation</a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Interactive Map Section */}
           <div>

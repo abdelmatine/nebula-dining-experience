@@ -22,7 +22,8 @@ const Reservations = () => {
     phone: "",
     guests: "",
     time: "",
-    specialRequests: ""
+    specialRequests: "",
+    reservationType: ""
   });
   const [showEmailVerification, setShowEmailVerification] = useState(false);
   const { toast } = useToast();
@@ -86,7 +87,8 @@ const Reservations = () => {
       phone: "",
       guests: "",
       time: "",
-      specialRequests: ""
+      specialRequests: "",
+      reservationType: ""
     });
     setDate(undefined);
   };
@@ -101,7 +103,7 @@ const Reservations = () => {
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-alex-brush font-bold mb-6">
-            Reserve Your <span className="text-gradient-primary">Table</span>
+            <span className="text-white font-bold">Reserve Your</span> <span className="text-gradient-primary">Table</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Experience culinary excellence in our modern dining space. Book your table for an unforgettable meal.
@@ -122,6 +124,19 @@ const Reservations = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2 mb-6">
+                  <Label>Reservation Type *</Label>
+                  <Select value={formData.reservationType} onValueChange={(value) => handleInputChange("reservationType", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select reservation type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="simple">Simple Reservation</SelectItem>
+                      <SelectItem value="event">Event Reservation</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name *</Label>
