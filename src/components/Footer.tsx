@@ -30,11 +30,11 @@ export const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/menu" className="text-muted-foreground hover:text-foreground transition-colors">Menu</Link></li>
-              <li><Link to="/locations" className="text-muted-foreground hover:text-foreground transition-colors">Locations</Link></li>
-              <li><Link to="/reservations" className="text-muted-foreground hover:text-foreground transition-colors">Reservations</Link></li>
-              <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
+              <li><Link to="/menu" onClick={() => window.scrollTo(0, 0)} className="text-muted-foreground hover:text-foreground transition-colors">Menu</Link></li>
+              <li><Link to="/locations" onClick={() => window.scrollTo(0, 0)} className="text-muted-foreground hover:text-foreground transition-colors">Locations</Link></li>
+              <li><Link to="/reservations" onClick={() => window.scrollTo(0, 0)} className="text-muted-foreground hover:text-foreground transition-colors">Reservations</Link></li>
+              <li><Link to="/about" onClick={() => window.scrollTo(0, 0)} className="text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
+              <li><Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
             </ul>
           </div>
 

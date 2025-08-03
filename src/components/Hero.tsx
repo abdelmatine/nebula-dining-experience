@@ -42,7 +42,7 @@ export const Hero = () => {
     <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Hero Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90 dark:opacity-60"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 dark:opacity-60"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       

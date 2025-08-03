@@ -88,7 +88,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="pt-24 px-6 max-w-7xl mx-auto animate-fade-in">
+      <div className="pt-24 px-6 max-w-7xl mx-auto animate-fade-in mb-20">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
             Admin Dashboard
@@ -105,7 +105,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -122,7 +122,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Revenue</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -139,7 +139,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Reservations</CardTitle>
                 <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -156,7 +156,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Customers</CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
@@ -183,7 +183,7 @@ export default function Admin() {
           {/* Dashboard Overview */}
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card>
+              <Card className="dark:bg-slate-900/50">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Today's Revenue</CardTitle>
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -194,7 +194,7 @@ export default function Admin() {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="dark:bg-slate-900/50">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Active Orders</CardTitle>
                   <Package className="h-4 w-4 text-muted-foreground" />
@@ -205,7 +205,7 @@ export default function Admin() {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="dark:bg-slate-900/50">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Table Bookings</CardTitle>
                   <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -218,7 +218,7 @@ export default function Admin() {
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
+              <Card className="dark:bg-slate-900/50">
                 <CardHeader>
                   <CardTitle>Recent Orders</CardTitle>
                 </CardHeader>
@@ -239,7 +239,7 @@ export default function Admin() {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="dark:bg-slate-900/50">
                 <CardHeader>
                   <CardTitle>Today's Reservations</CardTitle>
                 </CardHeader>
@@ -264,7 +264,7 @@ export default function Admin() {
 
           {/* Menu Management */}
           <TabsContent value="menu" className="space-y-6">
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ChefHat className="h-5 w-5" />
@@ -366,7 +366,7 @@ export default function Admin() {
 
           {/* Orders Management */}
           <TabsContent value="orders" className="space-y-6">
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader>
                 <CardTitle>Recent Orders</CardTitle>
               </CardHeader>
@@ -396,7 +396,7 @@ export default function Admin() {
 
           {/* Reservations Management */}
           <TabsContent value="reservations" className="space-y-6">
-            <Card>
+            <Card className="dark:bg-slate-900/50">
               <CardHeader>
                 <CardTitle>Upcoming Reservations</CardTitle>
               </CardHeader>

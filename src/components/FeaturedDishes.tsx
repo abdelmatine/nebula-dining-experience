@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/redux";
 import { addItem } from "@/store/cartSlice";
-import { setSelectedItem } from "@/store/menuSlice";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MenuItemModal } from "@/components/MenuItemModal";
@@ -21,7 +20,7 @@ const dishes = [
     category: "bowls",
     tags: ["healthy", "vegetarian"],
     ingredients: ["quinoa", "grilled vegetables", "olives", "tahini"],
-    nutritionalInfo: {
+    nutrition: {
       calories: 450,
       protein: 15,
       carbs: 55,
@@ -40,7 +39,7 @@ const dishes = [
     category: "pasta",
     tags: ["signature", "premium"],
     ingredients: ["handmade pasta", "black truffle", "parmesan"],
-    nutritionalInfo: {
+    nutrition: {
       calories: 680,
       protein: 22,
       carbs: 65,
@@ -59,7 +58,7 @@ const dishes = [
     category: "seafood",
     tags: ["healthy", "omega-3"],
     ingredients: ["atlantic salmon", "herb crust", "seasonal vegetables"],
-    nutritionalInfo: {
+    nutrition: {
       calories: 520,
       protein: 42,
       carbs: 15,
@@ -108,7 +107,7 @@ export const FeaturedDishes = () => {
               whileHover={{ y: -10 }}
               className="group"
             >
-              <Card className="glass border-white/20 overflow-hidden hover-scale transition-all duration-300 cursor-pointer" onClick={() => handleDishClick(dish)}>
+              <Card className="glass border-white/20 overflow-hidden hover-scale transition-all duration-300 cursor-pointer dark:bg-slate-900/50" onClick={() => handleDishClick(dish)}>
                 <div className="relative overflow-hidden">
                   <img 
                     src={dish.image} 

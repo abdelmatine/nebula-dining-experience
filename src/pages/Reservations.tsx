@@ -115,7 +115,7 @@ const Reservations = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <Card className="glass border-border/50">
+          <Card className="glass border-border/50 dark:bg-slate-900/50">
             <CardHeader>
               <CardTitle className="text-2xl font-space-grotesk flex items-center gap-2">
                 <Utensils className="h-6 w-6 text-primary" />
