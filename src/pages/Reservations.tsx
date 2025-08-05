@@ -103,7 +103,7 @@ const Reservations = () => {
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-alex-brush font-bold mb-6">
-            <span className="text-white font-bold">Reserve Your</span> <span className="text-gradient-primary">Table</span>
+            <span className="text-foreground font-bold">Reserve Your</span> <span className="text-gradient-primary">Table</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Experience culinary excellence in our modern dining space. Book your table for an unforgettable meal.

@@ -29,9 +29,9 @@ export default function Locations() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
-              <span className="text-white font-bold">Our</span> Locations
-            </h1>
+          <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
+            <span className="text-foreground font-bold">Our</span> Locations
+          </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Visit any of our elegant locations for an unforgettable dining experience
             </p>

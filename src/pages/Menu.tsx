@@ -6,10 +6,12 @@ import { addItem } from '@/store/cartSlice';
 import { Button } from '@/components/ui/button';
 import { MenuItemModal } from '@/components/MenuItemModal';
 import { MenuItemCard } from '@/components/MenuItemCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Star } from 'lucide-react';
 export default function Menu() {
   const dispatch = useAppDispatch();
   const { items, selectedItem, isDetailOpen, activeCategory } = useAppSelector(state => state.menu);
+  const { t } = useLanguage();
   
   const categories = ['all', ...new Set(items.map(item => item.category))];
   
@@ -31,9 +33,9 @@ export default function Menu() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl font-alex-brush text-gradient-primary mb-4">
-            <span className="text-white font-bold">Our</span> Menu
+            <span className="text-white font-bold">{t('menu.title').split(' ')[0]}</span> {t('menu.title').split(' ').slice(1).join(' ')}
           </h1>
-          <p className="text-xl text-muted-foreground font-playfair">Discover our delicious selection</p>
+          <p className="text-xl text-muted-foreground font-playfair">{t('menu.subtitle')}</p>
         </motion.div>
 
         {/* Category Filters */}
@@ -45,7 +47,7 @@ export default function Menu() {
               onClick={() => dispatch(setActiveCategory(category))}
               className="capitalize"
             >
-              {category}
+              {category === 'all' ? t('menu.all') : t(`menu.${category}`)}
             </Button>
           ))}
         </div>
