@@ -31,6 +31,8 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { AdminOrderManagement } from "./AdminOrderManagement";
+import { AdminReservationManagement } from "./AdminReservationManagement";
 
 interface AdminTabsProps {
   mockRecentOrders: any[];
@@ -416,99 +418,12 @@ export default function AdminTabs({
 
       {/* Orders Management */}
       <TabsContent value="orders" className="space-y-6">
-        <Card className="dark:bg-slate-900/50">
-          <CardHeader>
-            <CardTitle>Recent Orders</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {mockRecentOrders.map((order) => (
-                <motion.div 
-                  key={order.id} 
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex-1">
-                    <p className="font-semibold">{order.customer}</p>
-                    <p className="text-sm text-muted-foreground">{order.items}</p>
-                    <p className="text-sm font-medium">€{order.total}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={order.status === 'delivered' ? 'default' : order.status === 'preparing' ? 'secondary' : 'outline'}>
-                      {order.status}
-                    </Badge>
-                    {order.status === 'pending' && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleConfirmOrder(order.id)}
-                      >
-                        <CheckCircle className="h-4 w-4" />
-                      </Button>
-                    )}
-                    <Button variant="outline" size="sm">
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <AdminOrderManagement />
       </TabsContent>
 
       {/* Reservations Management */}
       <TabsContent value="reservations" className="space-y-6">
-        <Card className="dark:bg-slate-900/50">
-          <CardHeader>
-            <CardTitle>Upcoming Reservations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {mockReservations.map((reservation) => (
-                <motion.div 
-                  key={reservation.id} 
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex-1">
-                    <p className="font-semibold">{reservation.customer}</p>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {reservation.date}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {reservation.time}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        {reservation.guests} guests
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={reservation.status === 'confirmed' ? 'default' : 'outline'}>
-                      {reservation.status}
-                    </Badge>
-                    {reservation.status === 'pending' && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleConfirmReservation(reservation.id)}
-                      >
-                        <CheckCircle className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <AdminReservationManagement />
       </TabsContent>
 
       {/* Events Management */}

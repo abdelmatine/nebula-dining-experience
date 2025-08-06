@@ -6,20 +6,23 @@ import { toggleCart } from "@/store/cartSlice";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ShoppingCart, User } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(state => state.cart);
+  const { t } = useLanguage();
 
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Menu", href: "/menu" },
-    { name: "Locations", href: "/locations" },
-    { name: "Reservations", href: "/reservations" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: t('nav.home'), href: "/" },
+    { name: t('nav.menu'), href: "/menu" },
+    { name: t('nav.locations'), href: "/locations" },
+    { name: t('nav.reservations'), href: "/reservations" },
+    { name: t('nav.about'), href: "/about" },
+    { name: t('nav.contact'), href: "/contact" },
   ];
 
   return (
@@ -90,9 +93,10 @@ export const Navigation = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
+            <LanguageToggle />
             <ThemeToggle />
             
-            <Button 
+            <Button
               variant="ghost" 
               size="sm" 
               className="relative hover:bg-primary/10 transition-colors"

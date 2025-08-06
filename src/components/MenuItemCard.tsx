@@ -56,9 +56,24 @@ export const MenuItemCard = ({ item, onClick, index = 0 }: MenuItemCardProps) =>
           
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 mb-3">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-white text-white" />
-              ))}
+              {Array.from({ length: 5 }).map((_, i) => {
+                const rating = 4.8;
+                const filled = i < Math.floor(rating);
+                const halfFilled = i === Math.floor(rating) && rating % 1 !== 0;
+                
+                return (
+                  <Star 
+                    key={i} 
+                    className={`h-4 w-4 transition-colors ${
+                      filled 
+                        ? "fill-yellow-400 text-yellow-400 dark:fill-yellow-500 dark:text-yellow-500" 
+                        : halfFilled 
+                        ? "fill-yellow-400/50 text-yellow-400 dark:fill-yellow-500/50 dark:text-yellow-500" 
+                        : "fill-none text-muted-foreground"
+                    }`} 
+                  />
+                );
+              })}
               <span className="text-sm text-muted-foreground ml-1">(4.8)</span>
             </div>
           </div>
