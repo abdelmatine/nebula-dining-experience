@@ -115,8 +115,10 @@ export const Navigation = () => {
               )}
             </Button>
             
-            <Button variant="ghost" size="sm" className="hover:bg-primary/10 transition-colors">
-              <User size={20} />
+            <Button variant="ghost" size="sm" className="hover:bg-primary/10 transition-colors" asChild>
+              <Link to="/auth">
+                <User size={20} />
+              </Link>
             </Button>
             
             <Button 

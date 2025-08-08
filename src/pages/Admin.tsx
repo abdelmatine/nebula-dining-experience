@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,27 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import AdminTabs from "@/components/AdminTabs";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [loadingSession, setLoadingSession] = useState(true);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthed(!!session);
+      if (!session) navigate('/auth');
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthed(!!session);
+      if (!session) navigate('/auth');
+      setLoadingSession(false);
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   const mockStats = {
     totalOrders: 1234,
@@ -44,6 +62,10 @@ export default function Admin() {
     { id: '1', title: 'Wine Tasting Event', date: '2024-03-20', time: '21:00', type: 'wine-tasting', description: 'Premium wine selection' },
     { id: '2', title: 'Cooking Class', date: '2024-03-25', time: '18:00', type: 'cooking-class', description: 'Learn from our chef' },
   ];
+
+  if (!isAuthed || loadingSession) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-background">

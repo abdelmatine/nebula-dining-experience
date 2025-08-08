@@ -1,70 +1,77 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Check, Clock, Package, Eye, Truck } from "lucide-react";
+import { Check, Clock, Package, Eye, Truck, XCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
+interface OrderItemUI { name: string; quantity: number; price: number; }
 interface Order {
   id: string;
   customerName: string;
-  items: Array<{
-    name: string;
-    quantity: number;
-    price: number;
-  }>;
+  items: OrderItemUI[];
   total: number;
-  status: 'pending' | 'preparing' | 'ready' | 'delivered';
+  status: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled';
   timestamp: Date;
   deliveryAddress?: string;
 }
 
-const mockOrders: Order[] = [
-  {
-    id: "ORD-001",
-    customerName: "John Doe",
-    items: [
-      { name: "Truffle Risotto", quantity: 1, price: 28 },
-      { name: "Wine Selection", quantity: 2, price: 15 }
-    ],
-    total: 58,
-    status: 'pending',
-    timestamp: new Date(Date.now() - 1000 * 60 * 10),
-    deliveryAddress: "123 Main St, City"
-  },
-  {
-    id: "ORD-002",
-    customerName: "Jane Smith",
-    items: [
-      { name: "Seafood Platter", quantity: 1, price: 45 },
-      { name: "Caesar Salad", quantity: 1, price: 18 }
-    ],
-    total: 63,
-    status: 'preparing',
-    timestamp: new Date(Date.now() - 1000 * 60 * 25),
-  },
-  {
-    id: "ORD-003",
-    customerName: "Mike Johnson",
-    items: [
-      { name: "Grilled Salmon", quantity: 2, price: 32 }
-    ],
-    total: 64,
-    status: 'ready',
-    timestamp: new Date(Date.now() - 1000 * 60 * 45),
-  }
-];
-
 export const AdminOrderManagement = () => {
-  const [orders, setOrders] = useState<Order[]>(mockOrders);
+  const { toast } = useToast();
+  const [orders, setOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
-    setOrders(orders.map(order => 
-      order.id === orderId ? { ...order, status: newStatus } : order
-    ));
+  const mapOrders = (rows: any[]): Order[] =>
+    rows.map((o) => ({
+      id: o.id,
+      customerName: o.customer_name ?? 'Customer',
+      items: (o.order_items ?? []).map((it: any) => ({
+        name: it.menu_items?.name ?? 'Item',
+        quantity: it.quantity,
+        price: Number(it.price)
+      })),
+      total: Number(o.total_amount ?? 0),
+      status: o.status,
+      timestamp: new Date(o.created_at),
+      deliveryAddress: o.delivery_address ?? undefined,
+    }));
+
+  const loadOrders = async () => {
+    const { data, error } = await supabase
+      .from('orders')
+      .select(`id, customer_name, status, total_amount, created_at, delivery_address,
+               order_items(quantity, price, menu_items(name))`)
+      .order('created_at', { ascending: false });
+    if (error) {
+      toast({ title: 'Failed to load orders', description: error.message, variant: 'destructive' });
+      return;
+    }
+    setOrders(mapOrders(data || []));
+  };
+
+  useEffect(() => {
+    loadOrders();
+    const channel = supabase
+      .channel('orders-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => loadOrders())
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const updateOrderStatus = async (orderId: string, newStatus: Order['status']) => {
+    const { error } = await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
+    if (error) {
+      toast({ title: 'Update failed', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Order updated', description: `Status changed to ${newStatus}.` });
+      await loadOrders();
+    }
   };
 
   const getStatusIcon = (status: Order['status']) => {
@@ -73,6 +80,8 @@ export const AdminOrderManagement = () => {
       case 'preparing': return <Package className="h-4 w-4" />;
       case 'ready': return <Check className="h-4 w-4" />;
       case 'delivered': return <Truck className="h-4 w-4" />;
+      case 'confirmed': return <Check className="h-4 w-4" />;
+      case 'cancelled': return <XCircle className="h-4 w-4" />;
     }
   };
 
@@ -82,13 +91,14 @@ export const AdminOrderManagement = () => {
       case 'preparing': return 'bg-blue-500';
       case 'ready': return 'bg-green-500';
       case 'delivered': return 'bg-gray-500';
+      case 'confirmed': return 'bg-primary';
+      case 'cancelled': return 'bg-destructive';
     }
   };
 
   const filterOrdersByStatus = (status: Order['status'] | 'all') => {
     return status === 'all' ? orders : orders.filter(order => order.status === status);
   };
-
   return (
     <div className="space-y-6">
       <Tabs defaultValue="all" className="w-full">

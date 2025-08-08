@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Calendar, Clock, Users, Phone, Mail, Eye, Check, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Reservation {
   id: string;
@@ -20,52 +22,56 @@ interface Reservation {
   specialRequests?: string;
 }
 
-const mockReservations: Reservation[] = [
-  {
-    id: "RES-001",
-    customerName: "Sarah Wilson",
-    email: "sarah@example.com",
-    phone: "+1234567890",
-    guests: 4,
-    date: new Date(Date.now() + 86400000), // Tomorrow
-    time: "19:00",
-    status: 'pending',
-    type: 'simple',
-    specialRequests: "Window table preferred"
-  },
-  {
-    id: "RES-002",
-    customerName: "David Brown",
-    email: "david@example.com",
-    phone: "+1234567891",
-    guests: 2,
-    date: new Date(Date.now() + 2 * 86400000), // Day after tomorrow
-    time: "20:30",
-    status: 'confirmed',
-    type: 'event',
-    specialRequests: "Anniversary celebration"
-  },
-  {
-    id: "RES-003",
-    customerName: "Emily Davis",
-    email: "emily@example.com",
-    phone: "+1234567892",
-    guests: 6,
-    date: new Date(Date.now() + 3 * 86400000),
-    time: "18:00",
-    status: 'confirmed',
-    type: 'simple'
-  }
-];
-
 export const AdminReservationManagement = () => {
-  const [reservations, setReservations] = useState<Reservation[]>(mockReservations);
+  const { toast } = useToast();
+  const [reservations, setReservations] = useState<Reservation[]>([]);
   const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
 
-  const updateReservationStatus = (reservationId: string, newStatus: Reservation['status']) => {
-    setReservations(reservations.map(reservation => 
-      reservation.id === reservationId ? { ...reservation, status: newStatus } : reservation
-    ));
+  const mapReservations = (rows: any[]): Reservation[] =>
+    rows.map((r) => ({
+      id: r.id,
+      customerName: r.customer_name ?? 'Guest',
+      email: r.customer_email ?? '',
+      phone: r.customer_phone ?? '',
+      guests: r.guests ?? 0,
+      date: new Date(r.date),
+      time: r.time,
+      status: r.status,
+      type: 'simple',
+      specialRequests: r.special_requests ?? undefined,
+    }));
+
+  const loadReservations = async () => {
+    const { data, error } = await supabase
+      .from('reservations')
+      .select('id, customer_name, customer_email, customer_phone, guests, date, time, status, special_requests')
+      .order('date', { ascending: true });
+    if (error) {
+      toast({ title: 'Failed to load reservations', description: error.message, variant: 'destructive' });
+      return;
+    }
+    setReservations(mapReservations(data || []));
+  };
+
+  useEffect(() => {
+    loadReservations();
+    const channel = supabase
+      .channel('reservations-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => loadReservations())
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const updateReservationStatus = async (reservationId: string, newStatus: Reservation['status']) => {
+    const { error } = await supabase.from('reservations').update({ status: newStatus }).eq('id', reservationId);
+    if (error) {
+      toast({ title: 'Update failed', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Reservation updated', description: `Status changed to ${newStatus}.` });
+      await loadReservations();
+    }
   };
 
   const getStatusColor = (status: Reservation['status']) => {
@@ -89,7 +95,6 @@ export const AdminReservationManagement = () => {
       day: 'numeric' 
     });
   };
-
   return (
     <div className="space-y-6">
       <Tabs defaultValue="all" className="w-full">
