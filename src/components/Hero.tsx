@@ -6,9 +6,12 @@ import { Wine, Utensils, Crown, Clock, Sparkles, Calendar, MapPin, Users } from 
 import { Link } from "react-router-dom";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useHappyHour } from "@/hooks/useHappyHour";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/hero-nebula.jpg";
 
 export const Hero = () => {
+  const { t } = useLanguage();
+  
   // Calculate next Saturday at 9 PM
   const getNextSaturday9PM = () => {
     const now = new Date();
@@ -117,13 +120,13 @@ export const Hero = () => {
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2 md:p-4">
             <Clock className="h-4 w-4 md:h-6 md:w-6 text-primary mb-1 md:mb-2" />
             <div className="text-xs md:text-sm font-space-grotesk font-semibold text-primary mb-1">
-              Next Event
+              {t('home.next.event')}
             </div>
             <div className="text-lg md:text-2xl font-bold text-gradient-primary mb-1">
               {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
             </div>
             <div className="text-xs text-muted-foreground">
-              Click for details
+              {t('home.event.click.details')}
             </div>
           </div>
         </div>
@@ -134,7 +137,7 @@ export const Hero = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-alex-brush text-center text-gradient-primary">
-              Wine Tasting Experience
+              {t('home.event.wine.title')}
             </DialogTitle>
           </DialogHeader>
           
@@ -143,9 +146,9 @@ export const Hero = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Wine className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-playfair font-semibold mb-2">Premium Wine Selection</h3>
+              <h3 className="text-xl font-playfair font-semibold mb-2">{t('home.event.wine.subtitle')}</h3>
               <p className="text-muted-foreground">
-                Join us for an exclusive wine tasting featuring carefully selected premium wines from renowned vineyards.
+                {t('home.event.wine.description')}
               </p>
             </div>
             
@@ -153,37 +156,37 @@ export const Hero = () => {
               <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                 <Calendar className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="font-semibold">Every Saturday</p>
-                  <p className="text-sm text-muted-foreground">9:00 PM - 11:00 PM</p>
+                  <p className="font-semibold">{t('home.event.every.saturday')}</p>
+                  <p className="text-sm text-muted-foreground">{t('home.event.time')}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                 <MapPin className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="font-semibold">Private Tasting Room</p>
-                  <p className="text-sm text-muted-foreground">Hauptstraße 347, Königswinter</p>
+                  <p className="font-semibold">{t('home.event.location')}</p>
+                  <p className="text-sm text-muted-foreground">{t('home.event.address')}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                 <Users className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="font-semibold">Limited Seating</p>
-                  <p className="text-sm text-muted-foreground">20 seats only - Reservation required</p>
+                  <p className="font-semibold">{t('home.event.seating')}</p>
+                  <p className="text-sm text-muted-foreground">{t('home.event.seats')}</p>
                 </div>
               </div>
             </div>
             
             <div className="text-center space-y-3">
-              <p className="text-lg font-semibold">€45 per person</p>
+              <p className="text-lg font-semibold">{t('home.event.price')}</p>
               <p className="text-sm text-muted-foreground">
-                Includes 5 wine tastings, artisan cheese selection, and expert sommelier guidance
+                {t('home.event.includes')}
               </p>
               
               <Button className="w-full" asChild>
                 <Link to="/reservations">
-                  Reserve Your Spot
+                  {t('home.event.reserve')}
                 </Link>
               </Button>
             </div>
@@ -228,13 +231,13 @@ export const Hero = () => {
             transition={{ delay: 0.6, duration: 1 }}
           >
             <p className="text-xl md:text-2xl font-playfair text-foreground dark:text-muted-foreground">
-              Restaurant • Bar • Vinothek
+              {t('home.hero.tagline1')}
             </p>
             <p className="text-lg md:text-xl text-foreground/90 dark:text-muted-foreground/80 mt-2 font-playfair">
-              Classic Elegance • Timeless Flavors
+              {t('home.hero.tagline2')}
             </p>
             <p className="text-base md:text-lg text-foreground/80 dark:text-muted-foreground/70 mt-3 font-inter">
-              Mon - Sun: 10:00 – 23:00 • Hauptstraße 347, Königswinter
+              {t('home.hero.tagline3')}
             </p>
           </motion.div>
           
@@ -244,8 +247,7 @@ export const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}
           >
-            Experience authentic cuisine in an elegant atmosphere where tradition meets excellence. 
-            A timeless destination for refined dining and exceptional wines.
+            {t('home.hero.description')}
           </motion.p>
           
           <motion.div
@@ -261,7 +263,7 @@ export const Hero = () => {
               asChild
             >
               <Link to="/menu">
-                Explore Menu
+                {t('home.hero.explore')}
                 <Utensils className="ml-2" size={20} />
               </Link>
             </Button>
@@ -273,7 +275,7 @@ export const Hero = () => {
               asChild
             >
               <Link to="/reservations">
-                Book a Table
+                {t('home.hero.book')}
                 <Wine className="ml-2" size={20} />
               </Link>
             </Button>
